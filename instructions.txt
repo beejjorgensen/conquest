@@ -1,0 +1,230 @@
+Conquest instructions      V 1.0
+
+1.0 Introduction
+
+    In this game, you control an interstellar empire.  You will decide
+which star systems to explore, which planets to colonize, whether to spend
+resources on technology, industrial development, or more combat ships.
+The relative sucess of your empire depends upon your decisions.  The
+computer will be directing its own empire and will be competing with you
+for the best planets. Whichever of you has the greatest population at the
+end of the game, will be the winner.
+
+   At any prompt, an 'H' command will list all possibilities for that
+context.
+
+2.0 Starting out
+
+   You will be asked to select a starting star system.
+
+   You start out with 30 transports (full of population) and 35 industrial
+units (IU's) to spend.  You initially can only buy ships or invest in
+technology.
+
+2.1   Ships
+
+   There are 4 types of ships within this game.  They are listed below
+along with their cost in IU's :
+
+      Name      Cost    Special characteristics
+   ----------------------------------------------------------------
+      Battlestar  75    Weapon factor 40
+      Cruiser     16    Weapon factor 7
+      Scout        6    Has unlimited range.
+      Transport    1    Transport 1 unit of population.
+
+2.2   Technology
+
+   You can also invest in improving your technology.  There are three
+different area which can be improved :
+
+      Name        Description
+   -----------------------------------------------------------------
+      Velocity    This determines the number of units any ship can move
+                  in a turn.
+      Range       This determines the number of units a ship may traverse
+                  without stopping at a star system.
+      Weapon      This determines the effectiveness of weapons on ships or
+                  missile bases.  The total weapon factor of a taskforce or
+                  planetary defense system is added up and multiplied by
+                  the this level.
+
+The amount of IU's necessary to advance to the next level varies and is
+displayed in the research summary.
+
+3.0 Game turn
+
+   The game is divided into 100 turns (maximum).  Each turn, several things
+happen.  These are as follows.
+
+3.1   Movement
+
+   Any task forces which have a destination are moved toward it by an
+amount determined by the level of velocity technology.
+
+3.2   Exploration
+
+   If any task forces arrive at a star system not previously explored by
+the player, it must be explored.  Exploration involves some risk.  Some
+ships may be destroyed during the exploration.  The chance of this
+happening depends on the type of ships in the task force.  The "best"
+ship will determine the exploration risk. (i.e. a task force with a
+crusier and transports is at lower risk than a task force with just
+transports).
+
+3.3   Combat
+
+   If any task force arrive at a star system where the computer has a task
+force, the forces fight till one or the other withdraws or is destroyed.
+The relative chances of each task force is determined by adding the weapons
+factor of all ships in the task force multiplied by the current level of
+weapons research.
+
+   If any task force arrives at a star system where the computer has a
+colony, the task force may elect to try to conquer the colony.  If the
+planet attacked has missile bases, the battle will be resolved in the same
+manner as task force combat.
+
+3.4   Orders
+
+   The commands possible at this point are as follows:
+
+3.4.1    Blasting planets
+
+   If a planet is in your control (either uninhabited, captured, or
+colonized) you may have the warships in the taskforce fire at the planet.
+This will eliminate some or all of the population of the planet and
+permanently reduce the population the planet can support.
+
+3.4.2    Colony summary
+
+   This will display a summary of the colonies currently under your control.
+The display has the following format.
+
+      Example                    Description
+
+   G4:60(46,/49)        1amb     Star system G, planet 4, population limit
+                                 60, current population 46, current
+                                 industrial production 49, one advanced
+                                 missile base present.
+
+3.4.3    Taskforce destination
+
+   This will target the specified taskforce on a particular star.  The star
+must be within the range limitation specified by the range research level.
+
+3.4.4    Go on
+
+   This will end this turn.  All orders issued will take effect.
+
+3.4.5    Join taskforces
+
+   This command allows two or more taskforces to be combined into one.
+
+3.4.6    Land transports
+
+   If a taskforce contains any transports, and if it is in a star system
+with a planet which can support more population, the player can land
+transports on the planet and establish or enlarge a colony there.
+
+3.4.7    Redraw maps
+
+   This command causes the screen to be redrawn.
+
+3.4.8    New taskforce
+
+   This command allows a taskforce to be split in two.
+
+3.4.9    Quit
+
+   This command will terminate the game.
+
+3.4.10   Research summary
+
+   This command will update and display the current research levels.
+
+3.4.11   Star summary
+
+   This command will display a summary for the requested star systems.  The
+display has the following format :
+                  Example                       Comments
+
+                  ----- star N -----            Star system designator
+                  TFa         1c                Task force a - 1 crusier
+                   1:10 No colony               Planet 1 - no colony
+                   4:60(46/49)         1amb     Planet 4
+                                                60 population limit
+                                                46 population units
+                                                49 industrial units
+                                                1 advanced missile base
+
+3.4.12   Taskforce summary
+
+   This command will display a summary of the requested taskforces.  This
+display has the following format.
+
+      Example
+
+   TFa:N( 1, 4)         1c
+   TFb: ( 1, 5)      1s       R7
+   TFc: ( 2, 4)      1s       M1
+
+   Line#    Description
+    1       Task force a, location star system N, coordinate (1, 4),
+            contains one crusier.
+    2       Task force b, coordinate (1, 5), contains one scout,
+            destination star system R, arrives in 7 turns.
+    3       Task force c, coordinate (2, 4), contains one scout,
+            destination star system M, arrives in 1 turn.
+
+4.0 Production turn
+
+   Every four game turns, each planet delivers its industrial production.
+This production can be spent on a number of different things.  The command
+line for this mode has the following format.
+
+      Example                 Description
+
+    63?                       63 IU's remain to be spent for this planet
+G4:60(60,/63)        1amb     Star system G, planet 4, population limit 60,
+                              current population 60, industrial production
+                              63, one advanced missile base present.
+
+As you spend IU's, the amount remaining will be reduced.  If you buy
+missile bases or invest in industrial production, the colony line will
+reflect the change.  If you purchase ships, a task force will be created
+and displayed below the colony line.  If you spend IU's on research, those
+research categories will be updated.
+
+5.0 Ending the game
+
+   There are 3 different ways to end the game.
+
+5.1   Quitting
+
+   You can quit at any orders prompt.  If you do, the current total
+populations will be displayed and the computer will declare itself the
+winner no matter which of you is ahead. (after all, it didn't quit).
+
+5.2   Overwhelm an opponent
+
+   If at any point during the game, you or the computer has greater than
+eight times the population that the other has, the game is ended and the
+larger population is declared as the winner.
+
+5.3   100 turns
+
+   At the end of 100 game turns, the larger population is declared the
+winner.
+
+6.0 Credits
+
+   Amiga port by Bob Shimbo, orginal author unknown.
+
+   This game started life on a UNIX system at Bell Labs.  It was ported to
+CP/M 80 by a Scott Kamin.  The manual was thrown together in an
+afternoon. (Typos and corrections welcome).
+
+   You can reach me through Compuserve (UID 70260,231) or TBBS of colorado
+(303)-693-4735.
+

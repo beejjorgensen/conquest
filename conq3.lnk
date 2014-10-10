@@ -1,0 +1,6 @@
+FROM LIB:c.o,conqmain.o,conqmp.o,conqsubs.o,conqs1.o,conq2.o,conq3.o,conq4.o,conq1.o,conqtf.o,conqlib.o,conqbat.o,conqb2.o,conqi2.o,conqd3.o,conqs3.o,conqpl.o,conqmc.o,conqve.o,conqmo.o,conqin.o
+TO conquest
+LIBRARY LIB:lc.lib,LIB:amiga.lib
+MAP nil:
+XREF nil:
+

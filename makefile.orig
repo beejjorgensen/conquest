@@ -1,0 +1,163 @@
+File conquest
+Uses conqmain.o
+Uses conqmp.o
+Uses conqsubs.o
+Uses conqs1.o
+Uses conq2.o
+Uses conq3.o
+Uses conq4.o
+Uses conq1.o
+Uses conqtf.o
+Uses conqlib.o
+Uses conqbat.o
+Uses conqb2.o
+Uses conqi2.o
+Uses conqd3.o
+Uses conqs3.o
+Uses conqpl.o
+Uses conqmc.o
+Uses conqve.o
+Uses conqmo.o
+Uses conqin.o
+Exec alink with conq3.lnk
+
+File conqmain.o
+Uses conqmain.c
+Uses vars.h
+Uses structs.h
+Uses defs.h
+Exec execute cc conqmain
+
+File conqmp.o
+Uses conqmp.c
+Uses vars.h
+Uses structs.h
+Uses defs.h
+Exec execute cc conqmp
+
+File conqsubs.o
+Uses conqsubs.c
+Uses vars.h
+Uses structs.h
+Uses defs.h
+Exec execute cc conqsubs
+
+File conqs1.o
+Uses conqs1.c
+Uses vars.h
+Uses structs.h
+Uses defs.h
+Exec execute cc conqs1
+
+File conq2.o
+Uses conq2.c
+Uses vars.h
+Uses structs.h
+Uses defs.h
+Exec execute cc conq2
+
+File conq3.o
+Uses conq3.c
+Uses vars.h
+Uses structs.h
+Uses defs.h
+Exec execute cc conq3
+
+File conq4.o
+Uses conq4.c
+Uses vars.h
+Uses structs.h
+Uses defs.h
+Exec execute cc conq4
+
+File conq1.o
+Uses conq1.c
+Uses vars.h
+Uses structs.h
+Uses defs.h
+Exec execute cc conq1
+
+File conqtf.o
+Uses conqtf.c
+Uses vars.h
+Uses structs.h
+Uses defs.h
+Exec execute cc conqtf
+
+File conqlib.o
+Uses conqlib.c
+Uses vars.h
+Uses structs.h
+Uses defs.h
+Exec execute cc conqlib
+
+File conqbat.o
+Uses conqbat.c
+Uses vars.h
+Uses structs.h
+Uses defs.h
+Exec execute cc conqbat
+
+File conqb2.o
+Uses conqb2.c
+Uses vars.h
+Uses structs.h
+Uses defs.h
+Exec execute cc conqb2
+
+File conqi2.o
+Uses conqi2.c
+Uses vars.h
+Uses structs.h
+Uses defs.h
+Exec execute cc conqi2
+
+File conqd3.o
+Uses conqd3.c
+Uses vars.h
+Uses structs.h
+Uses defs.h
+Exec execute cc conqd3
+
+File conqs3.o
+Uses conqs3.c
+Uses vars.h
+Uses structs.h
+Uses defs.h
+Exec execute cc conqs3
+
+File conqpl.o
+Uses conqpl.c
+Uses vars.h
+Uses structs.h
+Uses defs.h
+Exec execute cc conqpl
+
+File conqmc.o
+Uses conqmc.c
+Uses vars.h
+Uses structs.h
+Uses defs.h
+Exec execute cc conqmc
+
+File conqve.o
+Uses conqve.c
+Uses vars.h
+Uses structs.h
+Uses defs.h
+Exec execute cc conqve
+
+File conqmo.o
+Uses conqmo.c
+Uses vars.h
+Uses structs.h
+Uses defs.h
+Exec execute cc conqmo
+
+File conqin.o
+Uses conqin.c
+Uses vars.h
+Uses structs.h
+Uses defs.h
+Exec execute cc conqin
+
