@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <curses.h>
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
@@ -92,22 +93,22 @@ check_game_over()
             quit_game;
         if ( game_over ) {
                 cle2r_screen();
-                printf("*** Game over ***\n");
-                printf("Player: Population in transports:%3d", 
+                printw("*** Game over ***\n");
+                printw("Player: Population in transports:%3d", 
                                                         transports[player]);
-                printf("  IU's on colonies: %3d  TOTAL: %3d\n", inhabs[player],
+                printw("  IU's on colonies: %3d  TOTAL: %3d\n", inhabs[player],
                                                         total[player]);
-                putchar('\n');
-                printf("Enemy:  Population in transports:%3d",
+                addch('\n');
+                printw("Enemy:  Population in transports:%3d",
                                                         transports[ENEMY]);
-                printf("  IU's on colonies: %3d  TOTAL: %3d\n",
+                printw("  IU's on colonies: %3d  TOTAL: %3d\n",
                                                 inhabs[ENEMY], total[ENEMY]);
                 if ( (total[ENEMY] > total[player]) || quit_game  )
-                       printf("**** THE ENEMY HAS CONQUERED THE GALAXY ***\n");
+                       printw("**** THE ENEMY HAS CONQUERED THE GALAXY ***\n");
                 else if ( (total[player] > total[ENEMY]) )
-                   printf("*** PLAYER WINS- YOU HAVE SAVED THE GALAXY! ***\n");
+                   printw("*** PLAYER WINS- YOU HAVE SAVED THE GALAXY! ***\n");
                 else
-                        printf("*** DRAWN ***\n");
+                        printw("*** DRAWN ***\n");
         };
 }
 
@@ -154,19 +155,19 @@ boolean *Battl9;
                 plodds = fmin( 14.0, plodds);
                 plodds = exp( (log(0.8)) * plodds);
                 point(1,19);
-                printf("enemy %5d", en_forces);
+                printw("enemy %5d", en_forces);
                 if ( en_forces > 0 )
-                        printf("(weap %2d)", weapons[ENEMY]);
+                        printw("(weap %2d)", weapons[ENEMY]);
                 else
-                        printf("         ");
-                printf("sur: %4.0f", enodds*100.0);
+                        printw("         ");
+                printw("sur: %4.0f", enodds*100.0);
                 point(1,20);
-                printf("player %5d", pl_forces);
+                printw("player %5d", pl_forces);
                 if ( pl_forces > 0 )
-                        printf("(weap %2d)", weapons[player]);
+                        printw("(weap %2d)", weapons[player]);
                 else
-                        printf("         ");
-                printf("sur: %4.0f", plodds*100.0);
+                        printw("         ");
+                printw("sur: %4.0f", plodds*100.0);
         };
         *En0dds = enodds; 
         *Pl0dds = plodds; 
@@ -177,14 +178,14 @@ boolean *Battl9;
 disp_tf(taskf)
 struct sttf *taskf;
 {
-        if ( taskf->t !=0 ) printf("%2dt", taskf->t);
-        else printf("   ");
-        if ( taskf->s !=0 ) printf("%2ds", taskf->s);
-        else printf("   ");
-        if ( taskf->c !=0 ) printf("%2dc", taskf->c);
-        else printf("   ");
-        if ( taskf->b !=0 ) printf("%2db", taskf->b);
-        else printf("   ");
+        if ( taskf->t !=0 ) printw("%2dt", taskf->t);
+        else printw("   ");
+        if ( taskf->s !=0 ) printw("%2ds", taskf->s);
+        else printw("   ");
+        if ( taskf->c !=0 ) printw("%2dc", taskf->c);
+        else printw("   ");
+        if ( taskf->b !=0 ) printw("%2db", taskf->b);
+        else printw("   ");
 }
 
 EN2MY_attack(starnum)
@@ -224,7 +225,7 @@ int starnum;
                 if ( best_score < 0 ) {
                         cle3r_left();
                         point(1,19);
-                        printf("Enemy attacks: %c%d", starnum+'A'-1, 
+                        printw("Enemy attacks: %c%d", starnum+'A'-1, 
                                                         best_planet->number);
                         point(50,1);
                         pr5nt_star(starnum);

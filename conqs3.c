@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <curses.h>
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
@@ -7,10 +8,10 @@ get_char(C)
 char *C;
 {
 char result;
-Read(raw_fd, &result, 1);
+result = getch();
 if(result == 0x0d) result = '\n';
 *C = toupper(result);
-printf("%c", *C);
+printw("%c", *C);
 }
 
 get_line(iline, Ind0, onech)
@@ -28,12 +29,12 @@ int onech;
                         if ( ind!=1 ) {
                                 ind = ind - 1;
                                 if ( (ind != 1) && onech ) {
-                                        putchar('\b');
+                                        addch('\b');
                                         ind = ind - 1;
                                 };
                                 if ((ind != 1) && !onech) {
-                                        putchar(' ');
-                                        putchar('\b');
+                                        addch(' ');
+                                        addch('\b');
                                 }
                         };
                 } 
@@ -41,7 +42,7 @@ int onech;
                         iline[ind] = ch;
                         ind = ind + 1;
                         if ( onech ) {
-                                putchar(' ');
+                                addch(' ');
                                 iline[ind] = ' ';
                                 ind = ind + 1;
                         };
@@ -82,15 +83,7 @@ clear_field()
         if ( new_bottom < bottom_field ) {
                         for ( y = new_bottom + 1  ; y<=bottom_field; y++ ) {
                                 point(50,y);
-                                switch (terminal_type) {
-                                case adm3:
-                                        printf(blank_line);
-                                        break;
-                                case vis400:
-                                case vt52:
-                                        printf("\33[K");
-                                        break;
-                                }
+								printw(blank_line);
                         };
         };
         bottom_field = new_bottom;
@@ -99,36 +92,20 @@ clear_field()
 cle3r_left()
 {
         int i;
-        if ( terminal_type != hardcopy ) {
-                for ( i = 19 ; i<=24; i++ ) {
-                        if ( left_line[i] ) {
-                                switch (terminal_type) {
-                                case vt52:
-                    point(1,i);
-                    printf(blank_line);
-                    break;
-                                }
-                                left_line[i] = false;
-                        }
-                }
-        }
+		for ( i = 19 ; i<=24; i++ ) {
+				if ( left_line[i] ) {
+						point(1,i);
+						printw(blank_line);
+						left_line[i] = false;
+				}
+		}
 }
 
 
 
 cle2r_screen()
 {
-        switch ( terminal_type ) { /*clear screen*/
-        case vis400:
-                printf("\33[2J");
-                break;
-        case vt52: 
-                printf("\33[H\33[J");
-                break;
-        case adm3: 
-                putchar('\32'); 
-                break;
-        }; /*switch (*/
+		clear();
         point(1,1);
 }
 
@@ -264,7 +241,7 @@ int which;
         if (which == 3) h = help3;
         if (which == 4) h = help4;
         while (h->cmd != 0) {
-                printf("%2s - %-25s", h->cmd, h->does);
+                printw("%2s - %-25s", h->cmd, h->does);
                 point(50, j++);
                 h++;
         }
@@ -305,7 +282,7 @@ pause()
 {
         char dummy;
         point(1,18);
-        printf("Press any key to continue  ");
+        printw("Press any key to continue  ");
         get_char(&dummy);
 }
 
@@ -315,22 +292,22 @@ pr3nt_tf(i)
         int x, y;
         if ( (i!=0) && (i<27) ) {
                 if ( tf[player][i].dest != 0 ) {
-                        printf("TF%c:", i+'a'-1);
+                        printw("TF%c:", i+'a'-1);
                         x=tf[player][i].x; 
                         y=tf[player][i].y;
                         if ( tf[player][i].eta==0 )
-                                putchar(tf[player][i].dest+'A'-1);
+                                addch(tf[player][i].dest+'A'-1);
                         else
-                                putchar(' ');
-                        printf("(%2d,%2d)               ",x,y);
+                                addch(' ');
+                        printw("(%2d,%2d)               ",x,y);
                         point(x_cursor + 14, y_cursor);
                         x_cursor = x_cursor - 14;
                         disp_tf(&tf[player][i]);
                         if ( tf[player][i].eta != 0 ) {
-                                printf("%c2m", 0x9b);
-                                printf("%c%d",
+                                printw("%c2m", 0x9b);
+                                printw("%c%d",
                                 tf[player][i].dest+'A'-1, tf[player][i].eta);
-                                printf("%c0m", 0x9b);
+                                printw("%c0m", 0x9b);
                         };
                         point(x_cursor, y_cursor+1);
                 };
@@ -352,7 +329,7 @@ pr5nt_star(stnum)
                 };
                 if ( stars[stnum].visit[player]==true ) {
                         see=false;
-                        printf("----- star %c -----            ", stnum+'A'-1)
+                        printw("----- star %c -----            ", stnum+'A'-1)
                                 ;
                         point(50, y_cursor + 1);
                         x=stars[stnum].x;
@@ -362,7 +339,7 @@ pr5nt_star(stnum)
                                 for ( i=1 ; i<=26; i++ ) {
                                         if (tf[player][i].dest==stnum && tf[player][i].eta == 0)
                                         {
-                                                printf("TF%c                           ", i+'a'-1);
+                                                printw("TF%c                           ", i+'a'-1);
                                                 point(55,y_cursor);
                                                 disp_tf(&tf[player][i]);
                                                 point(50, y_cursor + 1);
@@ -376,59 +353,59 @@ pr5nt_star(stnum)
                                 while(tf[ENEMY][i].eta!=0 ||
                                    (tf[ENEMY][i].dest!=stnum) )
                                         i=i+1;
-                                printf(" EN:                          ");
+                                printw(" EN:                          ");
                                 point(55,y_cursor);
                                 disp_tf(&tf[ENEMY][i]);
                                 point( 50, y_cursor + 1);
                         };
                         p=stars[stnum].first_planet;
                         if ( p==nil ) {
-                                printf("  no useable planets          ");
+                                printw("  no useable planets          ");
                                 point(50,y_cursor + 1);
                         }
                         else {
                                 while ( p!=nil ) {
-                                        putchar(' ');
+                                        addch(' ');
         if ( ((y_cursor > 21) && (x_cursor >= 50)) ||
             (y_cursor > 24) ) {
                 pause();
                 clear_field();
                 point(50,1);
         };
-        printf("%d:%2d                         ", p->number, p->psee_capacity);
+        printw("%d:%2d                         ", p->number, p->psee_capacity);
         point(x_cursor + 5, y_cursor);
         x_cursor = x_cursor - 5;
         if ( p->psee_capacity==0 )
-                printf(" Decimated");
+                printw(" Decimated");
         else if ( (p->team==none) && see )
-                printf(" No colony");
+                printw(" No colony");
         else if ( p->team==player ) {
-                printf("(%2d,/%3d)", p->inhabitants, p->iu);
+                printw("(%2d,/%3d)", p->inhabitants, p->iu);
                 if ( p->conquered )
-                        printf("Con");
+                        printw("Con");
                 else
-                        printf("   ");
+                        printw("   ");
                 if ( p->mb!=0 )
-                        printf("%2dmb", p->mb);
+                        printw("%2dmb", p->mb);
                 else
-                        printf("    ");
+                        printw("    ");
                 if ( p->amb!=0 )
-                        printf("%2damb", p->amb);
+                        printw("%2damb", p->amb);
         } 
         else if ( (p->team==ENEMY) && see ) {
-                printf("*EN*");
+                printw("*EN*");
                 if ( see && p->conquered ) {
-                        printf("Conquered");
+                        printw("Conquered");
                 } 
                 else
-                        printf("   ");
+                        printw("   ");
                 if ( p->under_attack ) {
                         if ( p->mb != 0 )
-                                printf("%2dmb", p->mb);
+                                printw("%2dmb", p->mb);
                         else
-                                printf("    ");
+                                printw("    ");
                         if ( p->amb != 0 )
-                                printf("%2damb", p->amb);
+                                printw("%2damb", p->amb);
                 };
         };
         point(x_cursor,y_cursor + 1);

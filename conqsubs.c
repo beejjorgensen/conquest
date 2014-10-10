@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <curses.h>
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
@@ -8,7 +9,7 @@ ressum()
         char key;
         int value, ind;
         char iline[81];
-        printf("esearch field(s):");
+        printw("esearch field(s):");
         get_line(iline,&ind,true);
         get_token(iline,&ind,&value,&key);
         cle3r_left();
@@ -33,27 +34,27 @@ char field;
         switch ( field ) {
         case 'V':
                 point(53,18);
-                printf("V:%2d",vel[player]);
+                printw("V:%2d",vel[player]);
                 if ( vel[player] < max_vel )
-                        printf(" res: %3d need:%4d",vel_working[player],
+                        printw(" res: %3d need:%4d",vel_working[player],
                         vel_req[vel[player]+1]);
-                else printf("                   ");
+                else printw("                   ");
                 break;
         case 'R':
                 point( 53,19);
-                printf("R:%2d",range[player]);
+                printw("R:%2d",range[player]);
                 if ( range[player] < bdsize )
-                        printf(" res: %3d need:%4d",ran_working[player],
+                        printw(" res: %3d need:%4d",ran_working[player],
                         ran_req[range[player]+1]);
-                else printf("                   ");
+                else printw("                   ");
                 break;
         case 'W':
                 point(53,20);
-                printf("W:%2d",weapons[player]);
+                printw("W:%2d",weapons[player]);
                 if ( weapons[player] < 10 )
-                        printf(" res: %3d need:%4d",weap_working[player],
+                        printw(" res: %3d need:%4d",weap_working[player],
                         weap_req[weapons[player]+1]);
-                else printf("                   ");
+                else printw("                   ");
                 break;
         }; /*switch (*/
 }
@@ -116,7 +117,7 @@ int amt;
                 };
                 break;
         default: 
-                printf("error!!!! in research field %c\n", field);
+                printw("error!!!! in research field %c\n", field);
         }; /*switch (*/
 }
 

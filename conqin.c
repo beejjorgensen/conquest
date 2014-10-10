@@ -1,5 +1,8 @@
 #define new(x) x=(tplanet *)malloc(sizeof(tplanet))
 #include <stdio.h>
+#include <stdlib.h>
+#include <curses.h>
+#include <time.h>
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
@@ -62,20 +65,20 @@ initconst()
         int i3, i1,i2,x,y,temp;
         tteam team; 
         char tt;
-        long   date[3];
+        time_t date;
 
-        setnbf(stdin);
+		cbreak();
+		noecho();
 
-        printf("\n* Welcome to CONQUEST! *\n\n");
-        printf("Amiga version 1.0\n");
-        printf("Hit return to continue\n");
+        printw("\n* Welcome to CONQUEST! *\n\n");
+        printw("Amiga version 1.0\n");
+        printw("Hit return to continue\n");
         get_char(&i1);
-        terminal_type = vt52;
 
-        printf("\33<");
+        printw("\33<");
 
-        DateStamp(date);
-        srand48(date[0] ^ date[1] ^ date[2]);
+		date = time(NULL);
+        srand48(date);
 
         saved_game = false;
 
@@ -198,7 +201,7 @@ initconst()
         production_year = 1;
         printmap();
         point(33,20);
-        printf("*Initialization*");
+        printw("*Initialization*");
         init_player();
 }
 
@@ -212,7 +215,7 @@ init_player()
         char iline[81];
         do {
                 point(1,18);
-                printf("start at star?\n     ");
+                printw("start at star?\n     ");
                 get_char(&str);
                 point(1,19);
                 star_number= str-'A'+1;
@@ -223,19 +226,19 @@ init_player()
         tf_stars[star_number][player]=1;
         tf[player][1].dest = star_number;
         point(1,20);
-        printf("choose your initial fleet.");
+        printw("choose your initial fleet.");
         point(1,21);
-        printf("you have %d transports", initunit);
+        printw("you have %d transports", initunit);
         point(1,22);
-        printf(" && %d units to spend", initmoney);
+        printw(" && %d units to spend", initmoney);
         point(1,23);
-        printf("on ships or research.");
+        printw("on ships or research.");
         balance= initmoney;
         do {
                 point(1,19);
                 pr3nt_tf(1);
                 point(1,18);
-                printf("%3d?                          ", balance);
+                printw("%3d?                          ", balance);
                 point(6,18);
                 get_line(iline,&ind,false);
                 do {
@@ -275,7 +278,7 @@ init_player()
                                 break;
                         case '>':
                                 point(1,18);
-                                printf(">?      ");
+                                printw(">?      ");
                                 point(3,18);
                                 cost=0;
                                 get_char(&key);
@@ -288,18 +291,18 @@ init_player()
                                         break;
                                 default:
                                         error_message();
-                                        printf(" !Only M,R during initialize");
+                                        printw(" !Only M,R during initialize");
                                 }; /*!= switch (*/
                                 break;
                         default:
                                 error_message();
-                                printf( " !Illegal field %c",key);
+                                printw( " !Illegal field %c",key);
                         }; /*switch (*/
                         if ( cost <= balance )
                                 balance = balance - cost;
                         else {
                                 error_message();
-                                printf("  !can't afford %c",key);
+                                printw("  !can't afford %c",key);
                         };
                 } 
                 while (key != ' ');

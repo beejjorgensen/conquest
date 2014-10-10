@@ -1,5 +1,6 @@
 #define new(x) x=(tplanet *)alloc(sizeof(tplanet))
 #include <stdio.h>
+#include <curses.h>
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
@@ -16,7 +17,7 @@ battle()
                     ) {
                         if ( first ) {
                                 point(33,20);
-                                printf("* Tf battle *   ");
+                                printw("* Tf battle *   ");
                                 first = false;
                         };
                         tf_battle(starnum);

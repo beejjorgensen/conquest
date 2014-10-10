@@ -1,5 +1,6 @@
 #define new(x) x=(tplanet *)alloc(sizeof(tplanet))
 #include <stdio.h>
+#include <curses.h>
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
@@ -45,7 +46,7 @@ boolean first_time;
         tteam def_team;
         if ( left_line[24] ) {
                 point(1,24);
-                printf(blank_line);
+                printw(blank_line);
                 left_line[24] = false;
         };
         if ( att_team==ENEMY )
@@ -61,20 +62,20 @@ boolean first_time;
                 defend_save=exp(log(0.8)* (def_odds));
                 point(1,20);
                 if ( att_team == player )
-                        printf("TF%c", tfnum+'a'-1);
+                        printw("TF%c", tfnum+'a'-1);
                 else
-                        printf(" EN");
-                printf(": %4d(weap %2d)sur: %4.0f", att_forces, 
+                        printw(" EN");
+                printw(": %4d(weap %2d)sur: %4.0f", att_forces, 
                         weapons[att_team], attack_save*100);
                 point(1,21);
-                printf(" %c%d:%4d (weap %2d)sur: %4.0f", planet->pstar+'A'-1,
+                printw(" %c%d:%4d (weap %2d)sur: %4.0f", planet->pstar+'A'-1,
                 planet->number,
                 def_forces, weapons[def_team], defend_save*100);
                 point(1,22);
-                printf("Attacker losses:              ");
+                printw("Attacker losses:              ");
                 point(1,23);
                 left_line[23]=true;
-                printf(" Planet losses :              ");
+                printw(" Planet losses :              ");
                 a_lose_none = true;
                 p_lose_none = true;
                 do {
@@ -84,25 +85,25 @@ boolean first_time;
                         point(17,23);
                         bases = planet->mb;
                         lose(&planet->mb,&p_lose_none,'m',defend_save);
-                        if ( planet->mb != bases ) printf("b");
+                        if ( planet->mb != bases ) printw("b");
                         bases = planet->amb;
                         lose(&planet->amb,&p_lose_none,'a',defend_save);
-                        if ( planet->amb != bases ) printf("mb");
+                        if ( planet->amb != bases ) printw("mb");
                 } 
                 while (!first_time && p_lose_none &&
                     a_lose_none);
                 if ( a_lose_none ) {
                         point(17,22);
-                        printf("(none)");
+                        printw("(none)");
                 };
                 if ( p_lose_none ) {
                         point(17,23);
-                        printf("(none)");
+                        printw("(none)");
                 };
         };
         if ( (planet->mb+planet->amb==0)&& (any_bc(att_team,planet->pstar)) ) {
                 point(1,24);
-                printf("Planet %d falls!               ", planet->number);
+                printw("Planet %d falls!               ", planet->number);
                 planet->team = att_team;
                 planet->esee_team = att_team;
                 planet->conquered = true;
@@ -126,10 +127,10 @@ boolean *Battl9;
         struct stplanet *pplanet;
         boolean first_time;
         battle = *Battl9;
-        printf("Attack planet ");
+        printw("Attack planet ");
         pplanet = stars[starnum].first_planet;
         if ( (col_stars[starnum][ENEMY]>1) ) {
-                printf(":");
+                printw(":");
                 get_char(&planch);
                 cle3r_left();
                 planet_num = planch - '0';
@@ -147,25 +148,25 @@ boolean *Battl9;
                 if ( pplanet->number != planet_num ) {
                         planet_num = 0;
                         error_message();
-                        printf("! That is not a useable planet");
+                        printw("! That is not a useable planet");
                 } 
                 else if ( pplanet->team != ENEMY ) {
                         error_message();
-                        printf(" !Not an enemy colony");
+                        printw(" !Not an enemy colony");
                         planet_num = 0;
                 };
         } 
         else {
                 while ( pplanet->team != ENEMY )
                         pplanet = pplanet->next;
-                printf("%d", pplanet->number);
+                printw("%d", pplanet->number);
                 cle3r_left();
         };
         if ( planet_num != 0 ) {
                 point(1,19);
-                printf(" attacking tf ");
+                printw(" attacking tf ");
                 if ( tf_stars[starnum][player]>1 ) {
-                        printf(":");
+                        printw(":");
                         get_char(&tf_char);
                         tf_num = tf_char-'A'+1;
                 } 
@@ -174,24 +175,24 @@ boolean *Battl9;
                         while (tf[player][tf_num].dest != starnum ||
                             tf[player][tf_num].eta != 0 )  
                                 tf_num++;
-                        putchar(tf_num+'a'-1);
+                        addch(tf_num+'a'-1);
                 }
                 if (tf_num <1 || tf_num >26) {
                         error_message();
-                        printf(" !Illegal tf");
+                        printw(" !Illegal tf");
                 }
                 else if ( tf[player][tf_num].dest==0 ) {
                         error_message();
-                        printf(" !Nonexistent tf");
+                        printw(" !Nonexistent tf");
                 }
                 else if ( (tf[player][tf_num].dest!=starnum) ||
                     (tf[player][tf_num].eta!=0) ) {
                         error_message();
-                        printf(" !Tf is not at this star      ");
+                        printw(" !Tf is not at this star      ");
                 }
                 else if ( (tf[player][tf_num].b+tf[player][tf_num].c)==0 )  {
                         error_message();
-                        printf(" !Tf has no warships");
+                        printw(" !Tf has no warships");
                 }
                 else {
                         first_time = ! pplanet->under_attack;

@@ -33,11 +33,7 @@ GLOBAL_DEFINITION_OR_EXTERN int vel[2],range[2],weapons[2],
            player_arrivals[nstars+1], game_over,
            bottom_field;
 
-GLOBAL_DEFINITION_OR_EXTERN termtype        terminal_type;
-
 GLOBAL_DEFINITION_OR_EXTERN int x_cursor, y_cursor,
            saved_game,
            left_line[25], debug;
-
-GLOBAL_DEFINITION_OR_EXTERN int raw_fd;
 

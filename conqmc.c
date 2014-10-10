@@ -312,7 +312,7 @@ underdefended(starnum)
     pplanet = stars[starnum].first_planet;
     while ( (pplanet != nil) && (! result) ) {
         if ( (pplanet->team==ENEMY) && (pplanet->iu > 10) &&
-            ((6*pplanet->amb +pplanet->mb) < round(pplanet->iu / 15)) )
+            ((6*pplanet->amb +pplanet->mb) < conq_round(pplanet->iu / 15)) )
             result = true;
         pplanet = pplanet->next;
     };

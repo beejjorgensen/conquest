@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <curses.h>
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
@@ -43,15 +44,15 @@ int starnum;
         while ( battle ) {
                 if ( left_line[24] ) {
                         point(1,24);
-                        printf(blank_line);
+                        printw(blank_line);
                         left_line[24] = false;
                 };
                 pla_loss = true;
                 ene_loss = true;
                 point(1,21);
-                printf(" Enemy losses:                ");
+                printw(" Enemy losses:                ");
                 point(1,22);
-                printf("Player losses:                ");
+                printw("Player losses:                ");
                 do {
                         point(15,21);
                         lose(&tf[ENEMY][ennum].t,&ene_loss,'t',enodds);
@@ -67,11 +68,11 @@ int starnum;
                 while (!first && ene_loss && pla_loss);
                 if ( ene_loss ) {
                         point(15,21);
-                        printf("(none)");
+                        printw("(none)");
                 };
                 if ( pla_loss ) {
                         point(15,22);
-                        printf("(none)");
+                        printw("(none)");
                 };
                 first = false;
                 display_forces(ennum,plnum,&enodds,&plodds,&battle);
@@ -107,7 +108,7 @@ int starnum;
                         fin = false;
                         do {
                                 point(1,18);
-                                printf("B?                            ");
+                                printw("B?                            ");
                                 point(3,18);
                                 get_char(&ch);
                                 switch ( ch ) {
@@ -143,7 +144,7 @@ int starnum;
                                         fin = true;
                                         break;
                                 default: 
-                                        printf("!illegal command");
+                                        printw("!illegal command");
                                 }; /*switch (*/
                         } 
                         while (!fin && battle);
@@ -151,7 +152,7 @@ int starnum;
                         zero_tf(player,plnum);
                         if ( tf[ENEMY][new_tf].dest != 0 ) {
                                 point(1,23);
-                                printf("en withdraws");
+                                printw("en withdraws");
                                 point(14,23);
                                 disp_tf(&tf[ENEMY][new_tf]);
                                 tf[ENEMY][ennum].t = tf[ENEMY][ennum].t - tf[ENEMY][new_tf].t;
@@ -173,26 +174,24 @@ update_board(x, y, option)
 toption option;
 {
         int scren_x, screen_y;
-        if ( terminal_type != hardcopy ) {
-                scren_x = 3*x + 1;
-                screen_y = 16 - y;
-                switch ( option ) {
-                case left:
-                        point(scren_x,screen_y);
-                        putchar(board[x][y].enemy);
-                        break;
+		scren_x = 3*x + 1;
+		screen_y = 16 - y;
+		switch ( option ) {
+		case left:
+				point(scren_x,screen_y);
+				addch(board[x][y].enemy);
+				break;
 
-                case right:
-                        point(scren_x+2,screen_y);
-                        putchar(board[x][y].tf);
-                        break;
+		case right:
+				point(scren_x+2,screen_y);
+				addch(board[x][y].tf);
+				break;
 
-                case both:
-                        point(scren_x, screen_y);
-                        printf("%c%c%c", board[x][y].enemy,board[x][y].star, board[x][y].tf);
-                        break;
-                }; /*switch (*/
-        };
+		case both:
+				point(scren_x, screen_y);
+				printw("%c%c%c", board[x][y].enemy,board[x][y].star, board[x][y].tf);
+				break;
+		}; /*switch (*/
 }
 
 
@@ -200,21 +199,17 @@ up_year()
 {
         point(39,18);
         turn = turn + 1;
-        if ( terminal_type == hardcopy )
-                printf("Year ");
-        printf("%3d", turn);
+        printw("%3d", turn);
         point(48,19);
         production_year = production_year + 1;
-        if ( terminal_type == hardcopy )
-                printf("Production year ");
-        printf("%d", production_year);
+        printw("%d", production_year);
 }
 
 withdraw(starnum, plnum)
 {
         int withnum;  
         boolean error;
-        printf("ithdraw ");
+        printw("ithdraw ");
         cle3r_left();
         point(1,19);
         split_tf(&plnum,&withnum);

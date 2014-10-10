@@ -52,12 +52,3 @@ typedef int toption;
 #define left    1
 #define both    2
 
-typedef int termtype;
-#define hardcopy        0
-#define adm3    1
-#define vt52    2
-#define concept 3
-#define vi      4
-#define vis400  5
-
-

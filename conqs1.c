@@ -2,6 +2,7 @@
 #include "structs.h"
 #include "vars.h"
 #include <stdio.h>
+#include <curses.h>
 
 
 double sqrt();
@@ -21,17 +22,17 @@ boolean *Err0r;
                   board[tf[player][tf_num].x][tf[player][tf_num].y].star-'A'+1;
                 tf[player][tf_num].dest = from_star;
                 tf_stars[from_star][player]++;
-                printf("(Cancelling previous orders)");
+                printw("(Cancelling previous orders)");
                 point(1,y_cursor + 1);
         };
         error = true;
-        printf(" to star:");
+        printw(" to star:");
         point(10,y_cursor);
         get_char(&istar);
         st_num = istar-'A'+1;
         if ( (st_num<0) || (st_num>nstars) ) {
                 error_message();
-                printf("  !illegal star");
+                printw("  !illegal star");
         }
         else {
                 r=sqrt((float) (((stars[st_num].x-tf[1][tf_num].x)*
@@ -39,24 +40,24 @@ boolean *Err0r;
                         ((stars[st_num].y-tf[1][tf_num].y) * 
                         (stars[st_num].y-tf[1][tf_num].y))));
                 point(1,y_cursor + 1);
-                printf("   distance:%5.1f", r);
+                printw("   distance:%5.1f", r);
                 dst = r - 0.049 + 1;
                 if ( ( dst  > range[player] ) &&
                         ( (tf[1][tf_num].b != 0) ||
                                 (tf[1][tf_num].c != 0) ||
                                 (tf[1][tf_num].t != 0) ) ) {
                         error_message();
-                        printf("  !maximum range is %2d",
+                        printw("  !maximum range is %2d",
                         range[player]);
                 }
                 else if ( r < 0.5 ) {
                         point(1,y_cursor + 1);
-                        printf("Tf remains at star");
+                        printw("Tf remains at star");
                 }
                 else {
                         min_eta= ( (dst-1) / vel[player]) + 1;
                         point(1,y_cursor + 1);
-                        printf("eta in %2d turns", min_eta);
+                        printw("eta in %2d turns", min_eta);
                         tf_stars[tf[player][tf_num].dest][player]--;
                         tf[player][tf_num].dest=st_num;
                         tf[player][tf_num].eta = min_eta;

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <curses.h>
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
@@ -62,7 +63,7 @@ boolean *L0se_none;
                         };
                 };
                 if ( sleft < ships ) {
-                        printf(" %2d%c", ships-sleft, typ);
+                        printw(" %2d%c", ships-sleft, typ);
                         ships = sleft;
                 };
         };

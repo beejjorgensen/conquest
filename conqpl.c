@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <curses.h>
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
@@ -13,48 +14,48 @@ bl2st_planet()
         char iline[81]; 
         int ind,amount; 
         char dum;
-        printf("last");
+        printw("last");
         cle3r_left();
         point(1,19);
-        printf("Firing TF:");
+        printw("Firing TF:");
         get_char(&tf_char);
         tf_num = tf_char-'A'+1;
         if ( (tf_num < 1) || (tf_num > 26) ) {
                 error_message();
-                printf(" !Illegal tf");
+                printw(" !Illegal tf");
         }
         else if ( tf[player][tf_num].dest==0 ) {
                 error_message();
-                printf(" !Nonexistent tf");
+                printw(" !Nonexistent tf");
         }
         else if ( tf[player][tf_num].eta!=0 ) {
                 error_message();
-                printf(" !Tf is not in normal space   ");
+                printw(" !Tf is not in normal space   ");
         }
         else if ( tf[player][tf_num].blasting ) {
                 error_message();
-                printf(" !Tf is already blasting     ");
+                printw(" !Tf is already blasting     ");
         }
         else if ( (tf[player][tf_num].b == 0) && (tf[player][tf_num].c == 0) ) {
                 error_message();
-                printf(" !Tf has no warships         ");
+                printw(" !Tf has no warships         ");
         }
         else {
                 starnum = tf[player][tf_num].dest;
                 pplanet = stars[starnum].first_planet;
                 if ( pplanet==nil ) {
                         error_message();
-                        printf(" !No planets at star %c       ", 
+                        printw(" !No planets at star %c       ", 
                                                         starnum + 'A' - 1);
                 }
                 else {
                         point(1,20);
-                        printf("Target colony ");
+                        printw("Target colony ");
                         if ( pplanet->next== nil ) {
-                                printf("%2d",pplanet->number);
+                                printw("%2d",pplanet->number);
                         }
                         else {
-                                printf(":");
+                                printw(":");
                                 get_char(&pl_char);
                                 planet_num = pl_char -'0';
                                 done = false;
@@ -70,27 +71,27 @@ bl2st_planet()
                                 };
                                 if ( pplanet->number != planet_num ) {
                                      error_message();
-                                     printf(" !No such planet at this star ");
+                                     printw(" !No such planet at this star ");
                                      pplanet = nil;
                                 };
                         };
                         if ( pplanet != nil ) {
                                 if ( pplanet->team==ENEMY ) {
                                         error_message();
-                                        printf(" !Conquer it first!");
+                                        printw(" !Conquer it first!");
                                 }
                                 else if ( (pplanet->team==player) 
                                                 && (! pplanet->conquered)
                                     ) {
                                         error_message();
-                                        printf(" !That is a human colony!!    ");
+                                        printw(" !That is a human colony!!    ");
                                 }
                                 else {
                                    factors = weapons[player] 
                                         * ((tf[player][tf_num].c * c_guns) +
                                             (tf[player][tf_num].b * b_guns));
                                         point(1,21);
-                                        printf("Units (max %3d) :", factors/4);
+                                        printw("Units (max %3d) :", factors/4);
                                         point(18,21);
                                         get_line(iline,&ind,false);
                                         get_token(iline,&ind,&amount,&dum);
@@ -100,11 +101,11 @@ bl2st_planet()
                                            factors = min (factors, amount * 4);
                                         tf[player][tf_num].blasting = true;
                                         point(1,22);
-                                        printf("Blasting %3d units", factors/4);
+                                        printw("Blasting %3d units", factors/4);
                                         blast(pplanet,factors);
                                         point(1,23);
                                         left_line[23] = true;
-                                        putchar(pplanet->pstar+'A'-1);
+                                        addch(pplanet->pstar+'A'-1);
                                         pplanet->psee_capacity = pplanet->capacity;
                                         see = true;
         if ( ((y_cursor > 21) && (x_cursor >= 50)) ||
@@ -113,40 +114,40 @@ bl2st_planet()
                 clear_field();
                 point(50,1);
         };
-        printf("%d:%2d                         ", pplanet->number, pplanet->psee_capacity);
+        printw("%d:%2d                         ", pplanet->number, pplanet->psee_capacity);
         point(x_cursor + 5, y_cursor);
         x_cursor = x_cursor - 5;
         if ( pplanet->psee_capacity==0 )
-                printf(" Decimated");
+                printw(" Decimated");
         else if ( (pplanet->team==none) && see )
-                printf(" No colony");
+                printw(" No colony");
         else if ( pplanet->team==player ) {
-                printf("(%2d,/%3d)", pplanet->inhabitants, pplanet->iu);
+                printw("(%2d,/%3d)", pplanet->inhabitants, pplanet->iu);
                 if ( pplanet->conquered )
-                        printf("Con");
+                        printw("Con");
                 else
-                        printf("   ");
+                        printw("   ");
                 if ( pplanet->mb!=0 )
-                        printf("%2dmb", pplanet->mb);
+                        printw("%2dmb", pplanet->mb);
                 else
-                        printf("    ");
+                        printw("    ");
                 if ( pplanet->amb!=0 )
-                        printf("%2damb", pplanet->amb);
+                        printw("%2damb", pplanet->amb);
         } 
         else if ( (pplanet->team==ENEMY) && see ) {
-                printf("*EN*");
+                printw("*EN*");
                 if ( see && pplanet->conquered ) {
-                        printf("Conquered");
+                        printw("Conquered");
                 } 
                 else
-                        printf("   ");
+                        printw("   ");
                 if ( pplanet->under_attack ) {
                         if ( pplanet->mb != 0 )
-                                printf("%2dmb", pplanet->mb);
+                                printw("%2dmb", pplanet->mb);
                         else
-                                printf("    ");
+                                printw("    ");
                         if ( pplanet->amb != 0 )
-                                printf("%2damb", pplanet->amb);
+                                printw("%2damb", pplanet->amb);
                 };
         };
         point(x_cursor,y_cursor + 1);
@@ -162,11 +163,11 @@ inputplayer()
         char key; 
         boolean fin;
         point(33,20);
-        printf("* Movement *    ");
+        printw("* Movement *    ");
         fin=false;
         do {
                 point(1,18);
-                printf("?                             ");
+                printw("?                             ");
                 point(2,18);
                 get_char(&key);
                 switch ( key ) {
@@ -215,7 +216,7 @@ inputplayer()
                         break;
                 default:
                         error_message();
-                        printf("  !illegal command");
+                        printw("  !illegal command");
                 };  /*switch (*/
         } 
         while (!fin);
@@ -232,42 +233,42 @@ land()
         char iline[81]; 
         boolean found;
         struct stplanet  *pplanet;
-        printf("and tf:");
+        printw("and tf:");
         get_char(&tfc);
         cle3r_left();
         tfnum = tfc-'A'+1;
         if ( (tfnum<1) || (tfnum>26) ) {
                 error_message();
-                printf("  !illegal tf");
+                printw("  !illegal tf");
         }
         else if ( (tf[player][tfnum].dest==0)) {
                 error_message();
-                printf("  !nonexistent tf");
+                printw("  !nonexistent tf");
         }
         else if ( (tf[player][tfnum].eta!=0) ) {
                 error_message();
-                printf("  !tf is not in normal space  ");
+                printw("  !tf is not in normal space  ");
         }
         else {
                 starnum= tf[player][tfnum].dest;
                 pplanet= stars[starnum].first_planet;
                 if ( pplanet==nil ) {
                         error_message();
-                        printf("  !no planets at this star    ");
+                        printw("  !no planets at this star    ");
                 }
                 else if ( tf_stars[starnum][ENEMY]>0 ) {
                         error_message();
-                        printf("  !enemy ships present");
+                        printw("  !enemy ships present");
                 }
                 else {
                         point(11,18);
-                        printf(" planet ");
+                        printw(" planet ");
                         if ( pplanet->next==nil ) {
                                 planet_num = pplanet->number;
-                                printf("%d", planet_num);
+                                printw("%d", planet_num);
                         } 
                         else {
-                                printf(":");
+                                printw(":");
                                 get_char(&planc);
                                 planet_num = planc-'0';
                                 found=false;
@@ -279,33 +280,33 @@ land()
                                 if ( ! found ) {
                                         planet_num = 0;
                                         error_message();
-                                        printf(" !Not a habitable planet ");
+                                        printw(" !Not a habitable planet ");
                                 }
                         };
                         if ( planet_num != 0 ) {
                                 if ( (pplanet->team == ENEMY) || ((pplanet->team == player)
                                     && (pplanet->conquered))  ) {
                                         error_message();
-                                        printf("  !Enemy infested planet  !!  ");
+                                        printw("  !Enemy infested planet  !!  ");
                                 }
                                 else {    /*get the number of transports*/
                                         room_left = pplanet->capacity - pplanet->inhabitants;
                                         point(1,19);
-                                        printf(" transports:");
+                                        printw(" transports:");
                                         get_line(iline,&ind,false);
                                         get_token(iline,&ind,&transports,&trc);
                                         if ( transports==0 ) transports = tf[player][tfnum].t;
                                         if ( transports < 1 ) {
                                                 error_message();
-                                                printf("  !illegal transports");
+                                                printw("  !illegal transports");
                                         }
                                         else if ( transports > tf[player][tfnum].t ) {
                                                 error_message();
-                                                printf("  !only %2d transports in tf", tf[player][tfnum].t);
+                                                printw("  !only %2d transports in tf", tf[player][tfnum].t);
                                         }
                                         else if ( transports > room_left ) {
                                                 error_message();
-                                                printf("  !only room for %2d transports", room_left);
+                                                printw("  !only room for %2d transports", room_left);
                                         }
                                         else {
                                                 pplanet->team = player;
@@ -322,7 +323,7 @@ land()
                                                         update_board(x,y,left);
                                                 };
                                                 point(1,20);
-                                                putchar(starnum+'A'-1);
+                                                addch(starnum+'A'-1);
                                                 see = true;
         if ( ((y_cursor > 21) && (x_cursor >= 50)) ||
             (y_cursor > 24) ) {
@@ -330,40 +331,40 @@ land()
                 clear_field();
                 point(50,1);
         };
-        printf("%d:%2d                         ", pplanet->number, pplanet->psee_capacity);
+        printw("%d:%2d                         ", pplanet->number, pplanet->psee_capacity);
         point(x_cursor + 5, y_cursor);
         x_cursor = x_cursor - 5;
         if ( pplanet->psee_capacity==0 )
-                printf(" Decimated");
+                printw(" Decimated");
         else if ( (pplanet->team==none) && see )
-                printf(" No colony");
+                printw(" No colony");
         else if ( pplanet->team==player ) {
-                printf("(%2d,/%3d)", pplanet->inhabitants, pplanet->iu);
+                printw("(%2d,/%3d)", pplanet->inhabitants, pplanet->iu);
                 if ( pplanet->conquered )
-                        printf("Con");
+                        printw("Con");
                 else
-                        printf("   ");
+                        printw("   ");
                 if ( pplanet->mb!=0 )
-                        printf("%2dmb", pplanet->mb);
+                        printw("%2dmb", pplanet->mb);
                 else
-                        printf("    ");
+                        printw("    ");
                 if ( pplanet->amb!=0 )
-                        printf("%2damb", pplanet->amb);
+                        printw("%2damb", pplanet->amb);
         } 
         else if ( (pplanet->team==ENEMY) && see ) {
-                printf("*EN*");
+                printw("*EN*");
                 if ( see && pplanet->conquered ) {
-                        printf("Conquered");
+                        printw("Conquered");
                 } 
                 else
-                        printf("   ");
+                        printw("   ");
                 if ( pplanet->under_attack ) {
                         if ( pplanet->mb != 0 )
-                                printf("%2dmb", pplanet->mb);
+                                printw("%2dmb", pplanet->mb);
                         else
-                                printf("    ");
+                                printw("    ");
                         if ( pplanet->amb != 0 )
-                                printf("%2damb", pplanet->amb);
+                                printw("%2damb", pplanet->amb);
                 };
         };
         point(x_cursor,y_cursor + 1);
@@ -381,7 +382,7 @@ quit()
 {
         char answer;
         cle2r_screen();
-        printf("Quit game....[verify]\n");
+        printw("Quit game....[verify]\n");
         get_char(&answer);
         if ( answer != 'Y' )
                 printmap();
@@ -395,29 +396,29 @@ send_tf()
         char tf_move;
         int tf_num;
         boolean error;
-        printf("estination tf:");
+        printw("estination tf:");
         get_char(&tf_move);
         cle3r_left();
         point(1,19);
         tf_num = tf_move-'A'+1;
         if ( (tf_num<1) || (tf_num>26) ) { 
                 error_message();
-                printf(" !illegal tf");
+                printw(" !illegal tf");
         } 
         else if ( tf[player][tf_num].dest==0 ) { 
                 error_message();
-                printf(" !nonexistent tf");
+                printw(" !nonexistent tf");
         } 
         else if ( (tf[player][tf_num].eta != 0) &&
             ( (tf[player][tf_num].eta != tf[player][tf_num].origeta) ||
             (tf[player][tf_num].withdrew) )
             ) { 
                 error_message();
-                printf(" !Tf is not in normal space  ");
+                printw(" !Tf is not in normal space  ");
         } 
         else if ( tf[player][tf_num].blasting ) { 
                 error_message();
-                printf(" !Tf is blasting a planet");
+                printw(" !Tf is blasting a planet");
         } 
         else {
                 tf[player][tf_num].withdrew = false;

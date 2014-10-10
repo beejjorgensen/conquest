@@ -2,6 +2,7 @@
 #include "structs.h"
 #include "vars.h"
 #include <stdio.h>
+#include <curses.h>
 
 
 new_research()
@@ -36,13 +37,13 @@ int starnum;
         battle = any_bc(player,starnum);
         if ( (battle) ) {
                 point(33,20);
-                printf("Attack at star %c", starnum+'A'-1);
+                printw("Attack at star %c", starnum+'A'-1);
                 while (battle ) {
                         point(50,1);
                         pr5nt_star(starnum);
                         clear_field();
                         point(1,18);
-                        printf("P?                            ");
+                        printw("P?                            ");
                         point(3,18);
                         get_char(&command);
                         switch ( command ) {
@@ -76,13 +77,13 @@ int starnum;
                                 play_salvo(starnum,&battle);
                                 break;
                         case 'B': 
-                                printf("reak off attack");
+                                printw("reak off attack");
                                 battle = false;
                                 break;
                         default:
                                 cle3r_left();
                                 error_message();
-                                printf(" !Illegal command");
+                                printw(" !Illegal command");
                                 break;
                         }; /*switch (*/
                 };
@@ -92,7 +93,7 @@ int starnum;
                         pplanet = pplanet->next;
                 };
                 point(1,24);
-                printf("Planet attack concluded       ");
+                printw("Planet attack concluded       ");
                 revolt(starnum);
         };
 

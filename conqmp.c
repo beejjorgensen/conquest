@@ -2,6 +2,7 @@
 #include "structs.h"
 #include "vars.h"
 #include <stdio.h>
+#include <curses.h>
 
 
 printmap()
@@ -10,29 +11,29 @@ printmap()
         cle2r_screen();
         for ( i1= bdsize ; i1>=1; i1-- ) {
                 if ( ((i1==1) || (((i1 / 5)*5)==i1)) )
-                        printf("%2d|", i1);
+                        printw("%2d|", i1);
                 else
-                        printf("  |");
+                        printw("  |");
                 for ( i2=1 ; i2<=bdsize; i2++ )
-                        printf("%c%c%c",board[i2][i1].enemy,board[i2][i1].star,
+                        printw("%c%c%c",board[i2][i1].enemy,board[i2][i1].star,
                         board[i2][i1].tf);
-                printf("|\n");
+                printw("|\n");
         };
-        printf("   ");
-        for ( i1 = 1 ; i1<=bdsize; i1++ ) printf("---");
-        putchar('\n');
-        printf("   ");
+        printw("   ");
+        for ( i1 = 1 ; i1<=bdsize; i1++ ) printw("---");
+        addch('\n');
+        printw("   ");
         for ( i1 = 1 ; i1<=bdsize; i1++ ) {
                 if ( ((i1==1) || (((i1 / 5) * 5) == i1)) )
-                        printf("%2d ", i1);
+                        printw("%2d ", i1);
                 else
-                        printf("   ");
+                        printw("   ");
         };
-        putchar('\n');
+        addch('\n');
         point(33,18);
-        printf("Turn: %3d",turn);
+        printw("Turn: %3d",turn);
         point(33,19);
-        printf("Production yr: %d",production_year);
+        printw("Production yr: %d",production_year);
         bottom_field = 0;
         for ( i1 = 19 ; i1<=24; i1++ )
                 left_line[i1] = false;

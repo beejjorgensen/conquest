@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <curses.h>
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
@@ -116,27 +117,27 @@ struct stplanet *planet;
         balance=planet->iu;
         cle3r_left();
         point(1,19);
-        putchar(planet->pstar+'A'-1);
+        addch(planet->pstar+'A'-1);
 
-        printf("%d:%2d                         ", planet->number, planet->psee_capacity);
+        printw("%d:%2d                         ", planet->number, planet->psee_capacity);
         point(x_cursor + 5, y_cursor);
         x_cursor = x_cursor - 5;
-        printf("(%2d,/%3d)", planet->inhabitants, planet->iu);
+        printw("(%2d,/%3d)", planet->inhabitants, planet->iu);
         if ( planet->conquered )
-                printf("Con");
+                printw("Con");
         else
-                printf("   ");
+                printw("   ");
         if ( planet->mb!=0 )
-                printf("%2dmb", planet->mb);
+                printw("%2dmb", planet->mb);
         else
-                printf("    ");
+                printw("    ");
         if ( planet->amb!=0 )
-                printf("%2damb", planet->amb);
+                printw("%2damb", planet->amb);
         point(x_cursor,y_cursor + 1);
 
         do {
                 point(1,18);
-                printf("%3d?                          ", balance);
+                printw("%3d?                          ", balance);
                 point(5,18);
                 get_line(iline,&ind,false);
                 do {
@@ -147,12 +148,12 @@ struct stplanet *planet;
                                 if ( planet->inhabitants ==0 ) {
                                         cost = 0;
                                         error_message();
-                                        printf("  !abandoned planet");
+                                        printw("  !abandoned planet");
                                 } 
                                 else if (planet->conquered) {
                                         cost =0;
                                         error_message();
-                                        printf(" !No amb  on conquered colony ");
+                                        printw(" !No amb  on conquered colony ");
                                 } 
                                 else
                                         if ( cost<=balance ) {
@@ -184,12 +185,12 @@ struct stplanet *planet;
                                 if ( planet->inhabitants ==0 ) {
                                         cost =0;
                                         error_message();
-                                        printf("  !abandoned planet");
+                                        printw("  !abandoned planet");
                                 } 
                                 else if (planet->conquered) {
                                         cost =0;
                                         error_message();
-                                        printf(" !No Mb  on conquered colony  ");
+                                        printw(" !No Mb  on conquered colony  ");
                                 } 
                                 else
                                         if ( cost <= balance ) {
@@ -209,13 +210,13 @@ struct stplanet *planet;
                                 if ( cost <= balance ) {
                                         if ( cost > planet->inhabitants ) {
                                                 error_message();
-                                                printf(" ! Not enough people for ( trans");
+                                                printw(" ! Not enough people for ( trans");
                                                 cost=0;
                                         } 
                                         else if ( planet->conquered ) {
                                                 cost = 0;
                                                 error_message();
-                                                printf( "!No transports on conqered col");
+                                                printw( "!No transports on conqered col");
                                         } 
                                         else {
                                                 tf[player][new_tf].t=tf[player][new_tf].t+amount;
@@ -244,7 +245,7 @@ struct stplanet *planet;
                                     ) {
                                         cost = 0;
                                         error_message();
-                                        printf(" !Can't support that many iu's");
+                                        printw(" !Can't support that many iu's");
                                 } 
                                 else if ( cost <= balance ) {
                                         planet->iu=planet->iu+amount;
@@ -266,7 +267,7 @@ struct stplanet *planet;
                         case '>': 
                                 cost=0;
                                 point(1,18);
-                                printf(">?     ");
+                                printw(">?     ");
                                 point(3,18);
                                 get_char(&key);
                                 switch ( key ){
@@ -284,16 +285,16 @@ struct stplanet *planet;
                                         break;
                                 default:
                                         error_message();
-                                        printf(" !Only M,S,C,R allowed      ");
+                                        printw(" !Only M,S,C,R allowed      ");
                                 }; /*switch ( > */
                                 break;
                         default:
                                 error_message();
-                                printf(" !Illegal field %c",key);
+                                printw(" !Illegal field %c",key);
                         }; /*switch (*/
                         if ( cost > balance ) {
                                 error_message();
-                                printf(" !can't affort %3d%c", amount, key);
+                                printw(" !can't affort %3d%c", amount, key);
                         }
                         else
                                 balance = balance - cost;
@@ -301,22 +302,22 @@ struct stplanet *planet;
                 while (key != ' ');
                 cle3r_left();
                 point(1,19);
-                putchar(planet->pstar+'A'-1);
+                addch(planet->pstar+'A'-1);
 
-        printf("%d:%2d                         ", planet->number, planet->psee_capacity);
+        printw("%d:%2d                         ", planet->number, planet->psee_capacity);
         point(x_cursor + 5, y_cursor);
         x_cursor = x_cursor - 5;
-        printf("(%2d,/%3d)", planet->inhabitants, planet->iu);
+        printw("(%2d,/%3d)", planet->inhabitants, planet->iu);
         if ( planet->conquered )
-                printf("Con");
+                printw("Con");
         else
-                printf("   ");
+                printw("   ");
         if ( planet->mb!=0 )
-                printf("%2dmb", planet->mb);
+                printw("%2dmb", planet->mb);
         else
-                printf("    ");
+                printw("    ");
         if ( planet->amb!=0 )
-                printf("%2damb", planet->amb);
+                printw("%2damb", planet->amb);
         point(x_cursor,y_cursor + 1);
 
                 if ( printtf ) {
@@ -335,7 +336,7 @@ invest()
         struct stplanet  *pplan;
         production_year = 0;
         point(33,20);
-        printf("* investment *  ");
+        printw("* investment *  ");
         for ( starnum= 1 ; starnum<=nstars; starnum++ ) {
                 pplan= stars[starnum].first_planet;
                 while ( pplan!=nil ) {
@@ -344,7 +345,7 @@ invest()
                             && ((pplan->esee_def) < 12) )
                                 pplan->esee_def = (pplan->esee_def) + 1;
                         if ( (pplan->team) != none ) {
-                                newborn= round((pplan->inhabitants)
+                                newborn= conq_round((pplan->inhabitants)
                                     * growth_rate[pplan->team] *
                                     (1-((pplan->inhabitants)/(pplan->capacity))));
                                 if ( pplan->conquered )

@@ -1,8 +1,8 @@
+#include <stdio.h>
+#include <curses.h>
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
-#include <stdio.h>
-
 
 lose_q(Ship9s, typ, percent)
 int *Ship9s;
@@ -48,7 +48,7 @@ move_ships()
                                         left_line[20] = true;
                                         cle3r_left();
                                         point(1,19);
-                                        printf("Task force %c exploring %c.\n", '`'+i, 
+                                        printw("Task force %c exploring %c.\n", '`'+i, 
                                                 tf[tm][i].dest + '@');
                                         prob = (t_e_prob + rnd(t_e_var) * tf[tm][i].t) / 100.0;
                                         if(tf[tm][i].s != 0)
@@ -63,8 +63,8 @@ move_ships()
                                         lose(&tf[tm][i].s, &loss, 's', prob);
                                         lose(&tf[tm][i].c, &loss, 'c', prob);
                                         lose(&tf[tm][i].b, &loss, 'b', prob);
-                                        if(loss) printf("No ships");
-                                        printf(" destroyed.");
+                                        if(loss) printw("No ships");
+                                        printw(" destroyed.");
                     left_line[23] = true;
                                         pause();
                                         tf[tm][i].eta = 1;      /* fool zero tf */
@@ -76,8 +76,8 @@ move_ships()
                                                 dx= stars[tf[tm][i].dest].x;
                                                 dy= stars[tf[tm][i].dest].y;
                                                 ratio = 1.0 - ((float)tf[tm][i].eta / tf[tm][i].origeta);
-                                                tf[tm][i].x = tf[tm][i].xf + round(ratio*(dx-tf[tm][i].xf));
-                                                tf[tm][i].y = tf[tm][i].yf +round(ratio *(dy-tf[tm][i].yf));
+                                                tf[tm][i].x = tf[tm][i].xf + conq_round(ratio*(dx-tf[tm][i].xf));
+                                                tf[tm][i].y = tf[tm][i].yf + conq_round(ratio*(dy-tf[tm][i].yf));
                                                 if ( (tf[tm][i].eta ==0)  ) {
                                                         pplanet = stars[tf[tm][i].dest].first_planet;
                                                         while (pplanet != nil) {
@@ -135,51 +135,51 @@ move_ships()
                 if ( player_arrivals[i] ) {
                         if ( (! any)  ) {
                                 point(33,21);
-                                printf("Player arrivals :               ");
+                                printw("Player arrivals :               ");
                                 point(50,21);
                                 any = true;
                         };
-                        putchar(i+'A'-1);
+                        addch(i+'A'-1);
                         player_arrivals[i]=false;
                 };
         };
-        if ( (! any) && (terminal_type != hardcopy) ) {
+        if ( (! any) ) {
                 point(33,21);
-                printf(blank_line);
+                printw(blank_line);
         };
         any = false;
         for ( i= 1 ; i<=nstars; i++ ) {
                 if ( enemy_arrivals[i] ) {
                         if ( (! any)  ) {
                                 point(33,22);
-                                printf("Enemy arrivals  :               ");
+                                printw("Enemy arrivals  :               ");
                                 point(50,22);
                                 any = true;
                         };
-                        putchar(i+'A'-1);
+                        addch(i+'A'-1);
                         enemy_arrivals[i]=false;
                 };
         };
-        if ( (! any) && (terminal_type != hardcopy)  ) {
+        if ( (! any) ) {
                 point(33,22);
-                printf(blank_line);
+                printw(blank_line);
         };
         any = false;
         for ( i = 1 ; i<=nstars; i++ ) {
                 if ( en_departures[i] ) {
                         if ( ! any ) {
                                 point(33,23);
-                                printf("Enemy departures:               ");
+                                printw("Enemy departures:               ");
                                 point(50,23);
                                 any = true;
                         };
-                        putchar(i+'A'-1);
+                        addch(i+'A'-1);
                         en_departures[i]=false;
                 };
         };
-        if ( (! any) && (terminal_type != hardcopy) ) {
+        if ( (! any) ) {
                 point(33,23);
-                printf(blank_line);
+                printw(blank_line);
         };
         for ( i= 1 ; i<=nstars; i++ )
                 revolt(i);

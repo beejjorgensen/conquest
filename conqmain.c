@@ -4,12 +4,14 @@
 #include "structs.h"
 #include "vars.h"
 #include <stdio.h>
+#include <curses.h>
 
 main()
 
 {
-        raw_fd = Open("RAW:539/167/100/32/", 1006);
-        printf("\n *** CONQUEST *** \n");
+        initscr();
+
+        printw("\n *** CONQUEST *** \n");
         initconst();
         initmach();
         do {
@@ -26,27 +28,13 @@ main()
                 check_game_over();
         } 
         while (!game_over);
-        Close(raw_fd);
+
+        endwin();
 }
 
 point(col,row)
 {
-        switch ( terminal_type ) {
-        case adm3: 
-                printf("\33=%c%c", row+31, col+31);
-                break;
-        case vt52: 
-                printf("\33[%d;%dH", row, col);
-                break;
-        case vis400:
-                printf("\33[%d;%dH", row, col);
-                break;
-        case concept:
-                printf("\33a%c%c", row+31, col+31);
-                break;
-        default: 
-                putchar('\n');
-        };
+		move(row-1, col-1); // curses is 0-based
         x_cursor = col;
         y_cursor = row;
         if ( (x_cursor < 20) && (y_cursor != 18) )
@@ -67,7 +55,7 @@ int i;
 }
 
 int
-round(x)
+conq_round(x)
 float x;
 {
         if ( x < 0.0)
@@ -76,3 +64,10 @@ float x;
                 return ((int)(x+.5));
 }
 
+int
+min(a,b)
+int a;
+int b;
+{
+	return a<b?a:b;
+}
