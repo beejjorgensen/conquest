@@ -8,7 +8,15 @@ to the original sources.
 I still don't know how to play, and there are probably bugs. But at
 least it builds!
 
-Original Fish disk notes:
+## Bugs
+
+* Backspacing too far on a line can move the cursor effectively under
+  the prompt
+  * Sometimes this causes you units to jump to gigantic values so
+    there's UB in there somewhere.
+* Can't backspace properly over first entered character
+
+## Original Fish disk notes
 
 ```
 There are two executables provided here:
