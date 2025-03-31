@@ -4,7 +4,7 @@
 #include "structs.h"
 #include "vars.h"
 
-bl2st_planet()
+void bl2st_planet(void)
 {
         char tf_char, pl_char; 
         int tf_num, planet_num;
@@ -158,7 +158,7 @@ bl2st_planet()
         };
 }
 
-inputplayer()
+void inputplayer(void)
 {
         char key; 
         boolean fin;
@@ -224,7 +224,7 @@ inputplayer()
 
 
 
-land()
+void land(void)
 {
         char tfc,trc,planc; 
         boolean see;
@@ -378,7 +378,7 @@ land()
         };
 }
 
-quit()
+void quit(void)
 {
         char answer;
         cle2r_screen();
@@ -391,7 +391,7 @@ quit()
         };
 }
 
-send_tf()
+void send_tf(void)
 {
         char tf_move;
         int tf_num;

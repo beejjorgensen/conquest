@@ -3,33 +3,9 @@
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
+#include "funcs.h"
 
-ressum()
-{
-        char key;
-        int value, ind;
-        char iline[81];
-        printw("esearch field(s):");
-        get_line(iline,&ind,true);
-        get_token(iline,&ind,&value,&key);
-        cle3r_left();
-        if ( key==' ') {
-                pr2nt_res('R');
-                pr2nt_res('V');
-                pr2nt_res('W');
-        } 
-        else {
-                do {
-                        pr2nt_res(key);
-                        get_token(iline,&ind,&value,&key);
-                } 
-                while (key != ' ');
-        };
-}
-
-
-pr2nt_res(field)
-char field;
+void pr2nt_res(char field)
 {
         switch ( field ) {
         case 'V':
@@ -59,10 +35,31 @@ char field;
         }; /*switch (*/
 }
 
-research(team, field, amt)
-int team;
-char field;
-int amt;
+void ressum(void)
+{
+        char key;
+        int value, ind;
+        char iline[81];
+        printw("esearch field(s):");
+        get_line(iline,&ind,true);
+        get_token(iline,&ind,&value,&key);
+        cle3r_left();
+        if ( key==' ') {
+                pr2nt_res('R');
+                pr2nt_res('V');
+                pr2nt_res('W');
+        } 
+        else {
+                do {
+                        pr2nt_res(key);
+                        get_token(iline,&ind,&value,&key);
+                } 
+                while (key != ' ');
+        };
+}
+
+
+void research(int team, char field, int amt)
 {
         switch ( field ) {
         case 'W':

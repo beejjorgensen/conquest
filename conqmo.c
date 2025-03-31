@@ -4,10 +4,7 @@
 #include "structs.h"
 #include "vars.h"
 
-lose_q(Ship9s, typ, percent)
-int *Ship9s;
-char typ;
-float percent;
+void lose_q(int *Ship9s, char typ, float percent)
 {
         int i,sleft;
         int ships;
@@ -21,7 +18,7 @@ float percent;
         *Ship9s = sleft;
 }
 
-move_ships()
+void move_ships(void)
 {
         float ratio, prob; 
         int there,dx,dy,i; 

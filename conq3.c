@@ -1,11 +1,11 @@
+#include <stdio.h>
+#include <curses.h>
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
-#include <stdio.h>
-#include <curses.h>
+#include "funcs.h"
 
-
-new_research()
+void new_research(void)
 {
         if ( weapons[player] - weapons[ENEMY] > 1 )
                 en_research = 'W';
@@ -28,8 +28,7 @@ new_research()
 }
 
 
-pl2yerattack(starnum)
-int starnum;
+void pl2yerattack(int starnum)
 {
         boolean battle;
         char command;

@@ -1,20 +1,18 @@
+#include <stdio.h>
+#include <curses.h>
+#include <math.h>
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
-#include <stdio.h>
-#include <curses.h>
+#include "funcs.h"
 
-
-double sqrt();
-set_des(tf_num, Err0r)
-int tf_num;
-boolean *Err0r;
+void set_des(int tf_num, boolean *Err0r)
 {
         boolean error;
         int st_num,min_eta; 
         char istar; 
         float r;
-        int rge, dst;
+        int dst;
         int from_star;
         if ( (tf[player][tf_num].eta != 0) ) { /*cancel*/
                 tf[player][tf_num].eta = 0;
@@ -68,16 +66,5 @@ boolean *Err0r;
                 }
         }
         *Err0r = error;
-}
-
-
-double
-fmin(a, b)
-double a, b;
-{
-        if (a < b)
-                return(a);
-        else
-                return(b);
 }
 

@@ -1,13 +1,12 @@
 #include <stdio.h>
+#include <math.h>
 #include <curses.h>
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
+#include "funcs.h"
 
-boolean
-any_bc(team, starnum)
-tteam team;
-int starnum;
+boolean any_bc(tteam team, int starnum)
 {
         boolean any;  
         int tf_number;
@@ -26,9 +25,7 @@ int starnum;
 }
 
 
-best_plan(St9rnum, S9ze, T9am)
-int *St9rnum, *S9ze;
-tteam *T9am;
+void best_plan(int *St9rnum, int *S9ze, tteam *T9am)
 {
         tplanet *pplanet;
         int starnum, size;
@@ -49,7 +46,7 @@ tteam *T9am;
         *S9ze = size;
 }
 
-check_game_over()
+void check_game_over(void)
 {
         boolean dead[2];
         boolean quit_game;
@@ -112,13 +109,7 @@ check_game_over()
         };
 }
 
-
-double fmin();
-double exp(), log();
-
-display_forces(ennum, plnum, En0dds, Pl0dds, Battl9)
-float *En0dds, *Pl0dds;
-boolean *Battl9;
+void display_forces(int ennum, int plnum, float *En0dds, float *Pl0dds, boolean *Battl9)
 {
         float enodds, plodds;
         boolean battle;
@@ -174,9 +165,7 @@ boolean *Battl9;
         *Battl9 = battle;
 }
 
-
-disp_tf(taskf)
-struct sttf *taskf;
+void disp_tf(struct sttf *taskf)
 {
         if ( taskf->t !=0 ) printw("%2dt", taskf->t);
         else printw("   ");
@@ -188,8 +177,7 @@ struct sttf *taskf;
         else printw("   ");
 }
 
-EN2MY_attack(starnum)
-int starnum;
+void EN2MY_attack(int starnum)
 {
         int attack_factors,def_factors;  
         float odds,best_score;

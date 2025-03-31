@@ -1,20 +1,19 @@
 #define new(x) x=(tplanet *)alloc(sizeof(tplanet))
 #include <stdio.h>
 #include <curses.h>
+#include <math.h>
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
+#include "funcs.h"
 
-double exp(), log(), fmin();
-
-blast(planet, factors)
-tplanet *planet;
+void blast(tplanet *planet, int factors)
 {
         int killed;
 
-        killed = min(planet->capacity,factors / 4);
-        planet->inhabitants = min(planet->inhabitants, planet->capacity) - killed;
-        planet->iu = min(planet->iu - killed, planet->inhabitants * iu_ratio);
+        killed = MIN(planet->capacity,factors / 4);
+        planet->inhabitants = MIN(planet->inhabitants, planet->capacity) - killed;
+        planet->iu = MIN(planet->iu - killed, planet->inhabitants * iu_ratio);
         planet->capacity = planet->capacity - killed;
         if ( planet->inhabitants <=0 ) {
                 planet->inhabitants = 0;
@@ -34,11 +33,7 @@ tplanet *planet;
 
 
 
-fire_salvo(att_team, task, tfnum, planet, first_time)
-tteam att_team;
-struct sttf *task;
-struct stplanet *planet;
-boolean first_time;
+void fire_salvo(tteam att_team, struct sttf *task, int tfnum, struct stplanet *planet, boolean first_time)
 {
         int bases,att_forces,def_forces; 
         boolean a_lose_none,p_lose_none;
@@ -116,9 +111,7 @@ boolean first_time;
         };
 }
 
-play_salvo(starnum, Battl9)
-int starnum;
-boolean *Battl9;
+void play_salvo(int starnum, boolean *Battl9)
 {
         boolean battle;
         char tf_char,planch; 

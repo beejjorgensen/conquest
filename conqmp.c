@@ -1,11 +1,11 @@
+#include <stdio.h>
+#include <curses.h>
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
-#include <stdio.h>
-#include <curses.h>
+#include "funcs.h"
 
-
-printmap()
+void printmap(void)
 {
         int i1, i2;
         cle2r_screen();

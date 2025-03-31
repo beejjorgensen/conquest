@@ -3,9 +3,33 @@
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
+#include "funcs.h"
 
-tf_battle(starnum)
-int starnum;
+void update_board(int x, int y, toption option)
+{
+        int scren_x, screen_y;
+		scren_x = 3*x + 1;
+		screen_y = 16 - y;
+		switch ( option ) {
+		case left:
+				point(scren_x,screen_y);
+				addch(board[x][y].enemy);
+				break;
+
+		case right:
+				point(scren_x+2,screen_y);
+				addch(board[x][y].tf);
+				break;
+
+		case both:
+				point(scren_x, screen_y);
+				printw("%c%c%c", board[x][y].enemy,board[x][y].star, board[x][y].tf);
+				break;
+		}; /*switch (*/
+}
+
+
+void tf_battle(int starnum)
 {
         int ennum,plnum; 
         float enodds,plodds; 
@@ -170,32 +194,7 @@ int starnum;
         on_board(stars[starnum].x,stars[starnum].y);
 }
 
-update_board(x, y, option)
-toption option;
-{
-        int scren_x, screen_y;
-		scren_x = 3*x + 1;
-		screen_y = 16 - y;
-		switch ( option ) {
-		case left:
-				point(scren_x,screen_y);
-				addch(board[x][y].enemy);
-				break;
-
-		case right:
-				point(scren_x+2,screen_y);
-				addch(board[x][y].tf);
-				break;
-
-		case both:
-				point(scren_x, screen_y);
-				printw("%c%c%c", board[x][y].enemy,board[x][y].star, board[x][y].tf);
-				break;
-		}; /*switch (*/
-}
-
-
-up_year()
+void up_year(void)
 {
         point(39,18);
         turn = turn + 1;
@@ -205,7 +204,7 @@ up_year()
         printw("%d", production_year);
 }
 
-withdraw(starnum, plnum)
+void withdraw(int starnum, int plnum)
 {
         int withnum;  
         boolean error;
@@ -227,8 +226,7 @@ withdraw(starnum, plnum)
         };
 }
 
-zero_tf(tm, tf_num)
-tteam tm;
+void zero_tf(tteam tm, int tf_num)
 {
         int x,y, i;
         if ( tf[tm][tf_num].dest != 0 ) {

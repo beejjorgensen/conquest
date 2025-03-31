@@ -3,15 +3,13 @@
 #include "structs.h"
 #include "vars.h"
 
-depart(starnum)
+void depart(int starnum)
 {
     if ( (tf_stars[starnum][player]+col_stars[starnum][player])>0 )
         en_departures[starnum]=true;
 }
 
-int
-eval_bc_col(planet)
-struct stplanet *planet;
+int eval_bc_col(struct stplanet *planet)
 {
 int i,forces;
 int result;
@@ -61,10 +59,7 @@ int result;
     return (result);
 }
 
-int
-eval_t_col(planet, range)
-struct stplanet *planet;
-float range;
+int eval_t_col(struct stplanet *planet, float range)
 {
     int result;
     if ( (! stars[planet->pstar].visit[ENEMY]) )
@@ -89,7 +84,7 @@ float range;
     return(result);
 }
 
-inputmach()
+void inputmach(void)
 {
     int count,tfnum,starnum;
     float slist[nstars+1];
@@ -105,9 +100,7 @@ inputmach()
     };
 }
 
-move_bc(task, slist)
-struct sttf *task;
-float slist[nstars+1];
+void move_bc(struct sttf *task, float slist[nstars+1])
 {
     int best_star,top_score,starnum,score,factors;
     struct stplanet *pplanet, *best_planet;
@@ -172,9 +165,7 @@ float slist[nstars+1];
 }
  
 
-send4transports(slist, task)
-float slist[nstars+1];
-struct sttf *task;
+void send4transports(float slist[nstars+1], struct sttf *task)
 {
     int new_tf,to_land,sec_star,sec_score,best_star,top_score,
         score,starnum;
@@ -251,10 +242,7 @@ struct sttf *task;
 }
 
 
-send2t_tf(task, slist, dest_star)
-struct sttf *task;
-float slist[nstars+1];
-int dest_star;
+void send2t_tf(struct sttf *task, float slist[nstars+1], int dest_star)
 {
     depart(task->dest);
     task->dest = dest_star;
@@ -262,9 +250,7 @@ int dest_star;
 }
 
 
-send_scouts(slist, task)
-float slist[nstars+1];
-struct sttf *task;
+void send_scouts(float slist[nstars+1], struct sttf *task)
 {
     int dest,new_tf,j,doind;
     int doable[nstars+1];
@@ -303,8 +289,7 @@ struct sttf *task;
     };
 }
 
-boolean
-underdefended(starnum)
+boolean underdefended(int starnum)
 {
     struct stplanet *pplanet;
     boolean result;
@@ -319,9 +304,7 @@ underdefended(starnum)
     return(result);
 }
 
-wander_bc(task, slist)
-struct sttf *task;
-float slist[nstars+1];
+void wander_bc(struct sttf *task, float slist[nstars+1])
 {
     int ships,i,count,dest,new_tf;
     if ( (task->b>1) || (task->c > 1) ) {

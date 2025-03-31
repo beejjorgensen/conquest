@@ -4,7 +4,7 @@
 #include "structs.h"
 #include "vars.h"
 
-print_col()
+void print_col(void)
 {
         int i; 
         boolean see;
@@ -71,7 +71,7 @@ print_col()
 
 
 
-starsum()
+void starsum(void)
 {
         char iline[81];  
         int ind,i,value;  
@@ -98,7 +98,7 @@ starsum()
         clear_field();
 }
 
-tfsum()
+void tfsum(void)
 {
         int i, value;  
         char tfs;

@@ -7,17 +7,13 @@
 #include "structs.h"
 #include "vars.h"
 
-conv_bcd( nibble, byte)
-int nibble;
-char byte;
+int conv_bcd(int nibble, char byte)
 {
  if (nibble == 1) return( byte & 0x0f);
  return( ( byte >> 4) & 0x0f);
 }
 
-assign_planets(Ustar0, starnum)
-tstar *Ustar0; 
-int starnum;
+int assign_planets(tstar *Ustar0, int starnum)
 {
         int i1, nplanets;
         tplanet *pplanet;
@@ -58,8 +54,7 @@ int starnum;
 }
 
 
-initconst()
-
+void initconst(void)
 {
         double sqrt();
         int i3, i1,i2,x,y,temp;
@@ -205,9 +200,7 @@ initconst()
         init_player();
 }
 
-
-
-init_player()
+void init_player(void)
 {
         char str, key; 
         int star_number;
@@ -315,7 +308,7 @@ init_player()
         point(33,20);
 }
 
-initmach()
+void initmach(void)
 {
         int res_amt, maxx, start_star, starnum, count;
         float slist[nstars+1];

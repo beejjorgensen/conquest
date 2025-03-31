@@ -4,8 +4,7 @@
 #include "structs.h"
 #include "vars.h"
 
-get_char(C)
-char *C;
+void get_char(char *C)
 {
 char result;
 result = getch();
@@ -14,10 +13,7 @@ if(result == 0x0d) result = '\n';
 printw("%c", *C);
 }
 
-get_line(iline, Ind0, onech)
-char *iline;
-int *Ind0;
-int onech;
+void get_line(char *iline, int *Ind0, int onech)
 {
         char ch;
         int ind;
@@ -56,10 +52,7 @@ int onech;
         *Ind0 = 1;
 }
 
-double sqrt();
-get_stars(s_star, slist, C0unt)
-float slist[nstars+1];
-int *C0unt;
+void get_stars(int s_star, float slist[nstars+1], int *C0unt)
 {
         int starnum, count;
         float this_range, range2;
@@ -76,7 +69,7 @@ int *C0unt;
         *C0unt = count;
 }
 
-clear_field()
+void clear_field(void)
 {
         int new_bottom, y;
         new_bottom = y_cursor - 1;
@@ -89,7 +82,7 @@ clear_field()
         bottom_field = new_bottom;
 }
 
-cle3r_left()
+void cle3r_left(void)
 {
         int i;
 		for ( i = 19 ; i<=24; i++ ) {
@@ -103,7 +96,7 @@ cle3r_left()
 
 
 
-cle2r_screen()
+void cle2r_screen(void)
 {
 		clear();
         point(1,1);
@@ -111,15 +104,12 @@ cle2r_screen()
 
 
 
-error_message()
+void error_message(void)
 {
         point(1,24);
 }
 
-get_token(line, Index0, Value0, Token0)
-char *line;
-int *Index0, *Value0;
-char *Token0;
+void get_token(char *line, int *Index0, int *Value0, char *Token0)
 {
         int index, value; 
         char token;
@@ -227,8 +217,7 @@ struct helpst help4[] = {
         {       0,      0                        }
 };
 
-help(which)
-int which;
+void help(int which)
 {
         struct helpst *h;
         int j;
@@ -249,7 +238,7 @@ int which;
 }
 
 
-on_board(x,y)
+void on_board(int x, int y)
 {
         int i;
         int starnum;
@@ -278,7 +267,7 @@ on_board(x,y)
         update_board(x,y,both);
 }
 
-pause()
+void pause(void)
 {
         char dummy;
         point(1,18);
@@ -287,7 +276,7 @@ pause()
 }
 
 
-pr3nt_tf(i)
+void pr3nt_tf(int i)
 {
         int x, y;
         if ( (i!=0) && (i<27) ) {
@@ -315,7 +304,7 @@ pr3nt_tf(i)
 }
 
 
-pr5nt_star(stnum)
+void pr5nt_star(int stnum)
 {
         boolean see;
         int i, x, y;
@@ -418,8 +407,7 @@ pr5nt_star(stnum)
 }
 
 
-swap(a, b)
-int *a, *b;
+void swap(int *a, int *b)
 {
         int t;
 

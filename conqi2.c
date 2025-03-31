@@ -3,7 +3,7 @@
 #include "structs.h"
 #include "vars.h"
 
-revolt(starnum)
+void revolt(int starnum)
 {
         tplanet *pplan;
         tteam loses, gets_back;

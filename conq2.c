@@ -1,12 +1,11 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <curses.h>
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
 
-get_tf(tm, I0, starnum)
-tteam tm;
-int *I0;
+void get_tf(tteam tm, int *I0, int starnum)
 {
         int i;
         i=1;
@@ -30,9 +29,7 @@ int *I0;
         *I0 = i;
 }
 
-joinsilent(team, parent, child)
-tteam team;
-struct sttf *parent, *child;
+void joinsilent(tteam team, struct sttf *parent, struct sttf *child)
 {
         parent->t = parent->t + child->t;
         parent->s = parent->s + child->s;
@@ -43,11 +40,7 @@ struct sttf *parent, *child;
         child->dest = 0;
 }
 
-lose(Ship9s, L0se_none, typ, percent)
-int *Ship9s;
-char typ;
-float percent;
-boolean *L0se_none;
+void lose(int *Ship9s, boolean *L0se_none, char typ, float percent)
 {
         int i,sleft;
         int ships;

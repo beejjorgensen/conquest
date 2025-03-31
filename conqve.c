@@ -4,8 +4,7 @@
 #include "structs.h"
 #include "vars.h"
 
-inv_enemy(x,y, planet)
-struct stplanet *planet;
+void inv_enemy(int x, int y, struct stplanet *planet)
 {
         int num,inv_amount,balance,min_mb,transports,new_tf;
         int trash1, trash2;
@@ -102,8 +101,7 @@ struct stplanet *planet;
         research(ENEMY,en_research,balance);
 }
 
-inv_player(x,y,planet)
-struct stplanet *planet;
+void inv_player(int x, int y, struct stplanet *planet)
 {
         boolean printtf; 
         char iline[81]; 
@@ -330,7 +328,7 @@ struct stplanet *planet;
         on_board(x,y);
 }
 
-invest()
+void invest(void)
 {
         int newborn,starnum; 
         struct stplanet  *pplan;

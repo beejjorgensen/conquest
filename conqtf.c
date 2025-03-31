@@ -3,9 +3,10 @@
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
+#include "funcs.h"
 
 
-make_tf()
+void make_tf(void)
 {
         char task; 
         int tf_num; 
@@ -38,8 +39,7 @@ make_tf()
 }
 
 
-split_tf(Tf2num, New2tf)
-int *Tf2num, *New2tf;
+void split_tf(int *Tf2num, int *New2tf)
 {
         int tf_num, new_tf;
         char ships; 
@@ -108,7 +108,7 @@ int *Tf2num, *New2tf;
         *New2tf = new_tf;
 }
 
-join_tf()
+void join_tf(void)
 {
         char tf1,tf2; 
         int tf1n,tf2n,ind,value;

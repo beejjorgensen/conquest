@@ -1,3 +1,6 @@
+#ifndef STRUCTS_H
+#define STRUCTS_H
+
 typedef int boolean;
 
 typedef struct ssector {
@@ -52,3 +55,4 @@ typedef int toption;
 #define left    1
 #define both    2
 
+#endif
