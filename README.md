@@ -9,21 +9,50 @@ get to the original sources.
 I still don't know how to play, and there are probably bugs. But at
 least it builds!
 
-**Request for information!** If you have any other sources or any
-additional information, I'd love to hear it either here on GitHub or at
-`beej@beej.us`.
+## Instructions
+
+All I have is what's in [`instructions.txt`](instructions.txt). I don't
+actually know how to play. Yet.
 
 ## Ports
 
 * Markus Fueger's Ruby port: https://github.com/mfueger/conquest
 
-## Original Source
+## History
 
-* Source for the Amiga can be found in `archives/Conquest-source.lha`.
-  This archive also contains the Amiga executables. I haven't tried them
-  in an emulator, but I'll bet they work.
+**Request for information!** If you have any other sources or any
+additional info, I'd love to hear it either here on GitHub or at
+`beej@beej.us`.
 
-## Fish Disk info
+### Thin Leads from the Instructions
+
+The [`instructions.txt`](instructions.txt) file includes this at the
+end:
+
+```
+6.0 Credits
+
+   Amiga port by Bob Shimbo, orginal author unknown.
+
+   This game started life on a UNIX system at Bell Labs.  It was ported
+   to CP/M 80 by a Scott Kamin.  The manual was thrown together in an
+   afternoon. (Typos and corrections welcome).
+
+   You can reach me through Compuserve (UID 70260,231) or TBBS of
+   colorado (303)-693-4735.
+```
+
+...*Bell Labs*?  I'm trying to track down more info, so if you have it,
+please send it!
+
+### Original Source
+
+* Source for the Amiga can be found in
+  [`archives/Conquest-source.lha`](archives/Conquest-source.lha]). This
+  archive also contains the Amiga executables. I haven't tried them in
+  an emulator, but I'll bet they work.
+
+### Fish Disk info
 
 This is apparently from [Fish
 Disk](https://en.wikipedia.org/wiki/Fred_Fish#The_Amiga_Library_Disks)
