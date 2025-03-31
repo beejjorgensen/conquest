@@ -1,6 +1,8 @@
 #ifndef STRUCTS_H
 #define STRUCTS_H
 
+#include "defs.h"
+
 typedef int boolean;
 
 typedef struct ssector {

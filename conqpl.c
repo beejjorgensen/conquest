@@ -3,6 +3,7 @@
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
+#include "funcs.h"
 
 void bl2st_planet(void)
 {
@@ -98,7 +99,7 @@ void bl2st_planet(void)
                                         if ( amount < 0 )
                                            factors = 0;
                                         else if ( amount > 0 )
-                                           factors = min (factors, amount * 4);
+                                           factors = MIN(factors, amount * 4);
                                         tf[player][tf_num].blasting = true;
                                         point(1,22);
                                         printw("Blasting %3d units", factors/4);
@@ -157,71 +158,6 @@ void bl2st_planet(void)
                 };
         };
 }
-
-void inputplayer(void)
-{
-        char key; 
-        boolean fin;
-        point(33,20);
-        printw("* Movement *    ");
-        fin=false;
-        do {
-                point(1,18);
-                printw("?                             ");
-                point(2,18);
-                get_char(&key);
-                switch ( key ) {
-                case 'M': 
-                        printmap();
-                        break;
-                case 'B': 
-                        bl2st_planet();
-                        break;
-                case 'G': 
-                case ' ': 
-                        fin=true;
-                        break;
-                case 'H': 
-                        help(1);
-                        break;
-                case 'L': 
-                        land();
-                        break;
-                case 'D': 
-                        send_tf();
-                        break;
-                case 'S': 
-                        starsum();
-                        break;
-                case 'N': 
-                        make_tf();
-                        break;
-                case 'J': 
-                        join_tf();
-                        break;
-                case 'C': 
-                        print_col();
-                        break;
-                case 'R': 
-                        ressum();
-                        break;
-                case 'Q':
-                        fin = true;
-                        quit();
-                        break;
-                case '?':
-                        break;
-                case 'T': 
-                        tfsum();
-                        break;
-                default:
-                        error_message();
-                        printw("  !illegal command");
-                };  /*switch (*/
-        } 
-        while (!fin);
-}
-
 
 
 void land(void)
@@ -378,19 +314,6 @@ void land(void)
         };
 }
 
-void quit(void)
-{
-        char answer;
-        cle2r_screen();
-        printw("Quit game....[verify]\n");
-        get_char(&answer);
-        if ( answer != 'Y' )
-                printmap();
-        else {
-                game_over = true;
-        };
-}
-
 void send_tf(void)
 {
         char tf_move;
@@ -425,4 +348,84 @@ void send_tf(void)
                 set_des(tf_num,&error);
         };
 }
+
+
+void quit(void)
+{
+        char answer;
+        cle2r_screen();
+        printw("Quit game....[verify]\n");
+        get_char(&answer);
+        if ( answer != 'Y' )
+                printmap();
+        else {
+                game_over = true;
+        };
+}
+
+
+void inputplayer(void)
+{
+        char key; 
+        boolean fin;
+        point(33,20);
+        printw("* Movement *    ");
+        fin=false;
+        do {
+                point(1,18);
+                printw("?                             ");
+                point(2,18);
+                get_char(&key);
+                switch ( key ) {
+                case 'M': 
+                        printmap();
+                        break;
+                case 'B': 
+                        bl2st_planet();
+                        break;
+                case 'G': 
+                case ' ': 
+                        fin=true;
+                        break;
+                case 'H': 
+                        help(1);
+                        break;
+                case 'L': 
+                        land();
+                        break;
+                case 'D': 
+                        send_tf();
+                        break;
+                case 'S': 
+                        starsum();
+                        break;
+                case 'N': 
+                        make_tf();
+                        break;
+                case 'J': 
+                        join_tf();
+                        break;
+                case 'C': 
+                        print_col();
+                        break;
+                case 'R': 
+                        ressum();
+                        break;
+                case 'Q':
+                        fin = true;
+                        quit();
+                        break;
+                case '?':
+                        break;
+                case 'T': 
+                        tfsum();
+                        break;
+                default:
+                        error_message();
+                        printw("  !illegal command");
+                };  /*switch (*/
+        } 
+        while (!fin);
+}
+
 

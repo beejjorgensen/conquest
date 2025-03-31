@@ -1,8 +1,10 @@
 #include <stdio.h>
+#include <ctype.h>
 #include <curses.h>
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
+#include "funcs.h"
 
 void get_char(char *C)
 {
@@ -55,7 +57,6 @@ void get_line(char *iline, int *Ind0, int onech)
 void get_stars(int s_star, float slist[nstars+1], int *C0unt)
 {
         int starnum, count;
-        float this_range, range2;
 
         count=0;
         for ( starnum = 1 ; starnum <= nstars; starnum++ ) {
@@ -307,7 +308,7 @@ void pr3nt_tf(int i)
 void pr5nt_star(int stnum)
 {
         boolean see;
-        int i, x, y;
+        int i;
         tplanet *p;
         if ( (stnum!=0) && (stnum<=nstars) ) {
                 if ( (y_cursor + 3 + tf_stars[stnum][player] + tf_stars[stnum][
@@ -321,8 +322,6 @@ void pr5nt_star(int stnum)
                         printw("----- star %c -----            ", stnum+'A'-1)
                                 ;
                         point(50, y_cursor + 1);
-                        x=stars[stnum].x;
-                        y=stars[stnum].y;
                         if ( tf_stars[stnum][player] !=0 ) {
                                 see = true;
                                 for ( i=1 ; i<=26; i++ ) {

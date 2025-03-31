@@ -1,11 +1,14 @@
-#define new(x) x=(tplanet *)malloc(sizeof(tplanet))
 #include <stdio.h>
 #include <stdlib.h>
 #include <curses.h>
 #include <time.h>
+#include <math.h>
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
+#include "funcs.h"
+
+#define new(x) x=(tplanet *)malloc(sizeof(tplanet))
 
 int conv_bcd(int nibble, char byte)
 {
@@ -13,7 +16,7 @@ int conv_bcd(int nibble, char byte)
  return( ( byte >> 4) & 0x0f);
 }
 
-int assign_planets(tstar *Ustar0, int starnum)
+void assign_planets(tstar *Ustar0, int starnum)
 {
         int i1, nplanets;
         tplanet *pplanet;
@@ -54,9 +57,116 @@ int assign_planets(tstar *Ustar0, int starnum)
 }
 
 
+void init_player(void)
+{
+        char str, key; 
+        int star_number;
+        int balance,cost,amt,ind; 
+        char iline[81];
+        do {
+                point(1,18);
+                printw("start at star?\n     ");
+                get_char(&str);
+                point(1,19);
+                star_number= str-'A'+1;
+        } 
+        while (star_number < 1 || star_number > nstars);
+        tf[player][1].x=stars[star_number].x;
+        tf[player][1].y=stars[star_number].y;
+        tf_stars[star_number][player]=1;
+        tf[player][1].dest = star_number;
+        point(1,20);
+        printw("choose your initial fleet.");
+        point(1,21);
+        printw("you have %d transports", initunit);
+        point(1,22);
+        printw(" && %d units to spend", initmoney);
+        point(1,23);
+        printw("on ships or research.");
+        balance= initmoney;
+        do {
+                point(1,19);
+                pr3nt_tf(1);
+                point(1,18);
+                printw("%3d?                          ", balance);
+                point(6,18);
+                get_line(iline,&ind,false);
+                do {
+                        get_token(iline,&ind,&amt,&key);
+                        switch ( key ) {
+                        case 'C':
+                                cost= amt*c_cost;
+                                if ( cost <= balance ) {
+                                        tf[player][1].c=tf[player][1].c+amt;
+                                }
+                                break;
+                        case 'S':
+                                cost= amt*s_cost;
+                                if ( cost <= balance ) {
+                                        tf[player][1].s=tf[player][1].s+amt;
+                                };
+                                break;
+                        case 'B':
+                                cost= amt*b_cost;
+                                if ( cost <= balance ) {
+                                        tf[player][1].b=tf[player][1].b+amt;
+                                };
+                                break;
+                        case 'H': 
+                                help(0); 
+                                cost = 0;
+                                break;
+                        case 'W': 
+                        case 'V': 
+                        case 'R':
+                                cost= amt;
+                                if ( cost <= balance )
+                                        research(player,key,amt);
+                                break;
+                        case ' ': 
+                                cost=0; 
+                                break;
+                        case '>':
+                                point(1,18);
+                                printw(">?      ");
+                                point(3,18);
+                                cost=0;
+                                get_char(&key);
+                                switch ( key ) {
+                                case 'M': 
+                                        printmap(); 
+                                        break;
+                                case 'R': 
+                                        ressum(); 
+                                        break;
+                                default:
+                                        error_message();
+                                        printw(" !Only M,R during initialize");
+                                }; /*!= switch (*/
+                                break;
+                        default:
+                                error_message();
+                                printw( " !Illegal field %c",key);
+                        }; /*switch (*/
+                        if ( cost <= balance )
+                                balance = balance - cost;
+                        else {
+                                error_message();
+                                printw("  !can't afford %c",key);
+                        };
+                } 
+                while (key != ' ');
+        } 
+        while (balance >0);
+        stars[star_number].visit[player]=true;
+        board[stars[star_number].x][stars[star_number].y].tf = 'a';
+        board[stars[star_number].x][stars[star_number].y].enemy=' ';
+        on_board(stars[star_number].x,stars[star_number].y);
+        point(33,20);
+}
+
 void initconst(void)
 {
-        double sqrt();
         int i3, i1,i2,x,y,temp;
         tteam team; 
         char tt;
@@ -68,7 +178,7 @@ void initconst(void)
         printw("\n* Welcome to CONQUEST! *\n\n");
         printw("Amiga version 1.0\n");
         printw("Hit return to continue\n");
-        get_char(&i1);
+        get_char(&tt);
 
         printw("\33<");
 
@@ -198,114 +308,6 @@ void initconst(void)
         point(33,20);
         printw("*Initialization*");
         init_player();
-}
-
-void init_player(void)
-{
-        char str, key; 
-        int star_number;
-        int balance,cost,amt,ind; 
-        char iline[81];
-        do {
-                point(1,18);
-                printw("start at star?\n     ");
-                get_char(&str);
-                point(1,19);
-                star_number= str-'A'+1;
-        } 
-        while (star_number < 1 || star_number > nstars);
-        tf[player][1].x=stars[star_number].x;
-        tf[player][1].y=stars[star_number].y;
-        tf_stars[star_number][player]=1;
-        tf[player][1].dest = star_number;
-        point(1,20);
-        printw("choose your initial fleet.");
-        point(1,21);
-        printw("you have %d transports", initunit);
-        point(1,22);
-        printw(" && %d units to spend", initmoney);
-        point(1,23);
-        printw("on ships or research.");
-        balance= initmoney;
-        do {
-                point(1,19);
-                pr3nt_tf(1);
-                point(1,18);
-                printw("%3d?                          ", balance);
-                point(6,18);
-                get_line(iline,&ind,false);
-                do {
-                        get_token(iline,&ind,&amt,&key);
-                        switch ( key ) {
-                        case 'C':
-                                cost= amt*c_cost;
-                                if ( cost <= balance ) {
-                                        tf[player][1].c=tf[player][1].c+amt;
-                                }
-                                break;
-                        case 'S':
-                                cost= amt*s_cost;
-                                if ( cost <= balance ) {
-                                        tf[player][1].s=tf[player][1].s+amt;
-                                };
-                                break;
-                        case 'B':
-                                cost= amt*b_cost;
-                                if ( cost <= balance ) {
-                                        tf[player][1].b=tf[player][1].b+amt;
-                                };
-                                break;
-                        case 'H': 
-                                help(0); 
-                                cost = 0;
-                                break;
-                        case 'W': 
-                        case 'V': 
-                        case 'R':
-                                cost= amt;
-                                if ( cost <= balance )
-                                        research(player,key,amt);
-                                break;
-                        case ' ': 
-                                cost=0; 
-                                break;
-                        case '>':
-                                point(1,18);
-                                printw(">?      ");
-                                point(3,18);
-                                cost=0;
-                                get_char(&key);
-                                switch ( key ) {
-                                case 'M': 
-                                        printmap(); 
-                                        break;
-                                case 'R': 
-                                        ressum(); 
-                                        break;
-                                default:
-                                        error_message();
-                                        printw(" !Only M,R during initialize");
-                                }; /*!= switch (*/
-                                break;
-                        default:
-                                error_message();
-                                printw( " !Illegal field %c",key);
-                        }; /*switch (*/
-                        if ( cost <= balance )
-                                balance = balance - cost;
-                        else {
-                                error_message();
-                                printw("  !can't afford %c",key);
-                        };
-                } 
-                while (key != ' ');
-        } 
-        while (balance >0);
-        stars[star_number].visit[player]=true;
-        board[stars[star_number].x][stars[star_number].y].tf = 'a';
-        board[stars[star_number].x][stars[star_number].y].enemy=' ';
-        on_board(stars[star_number].x,stars[star_number].y);
-        point(33,20);
 }
 
 void initmach(void)

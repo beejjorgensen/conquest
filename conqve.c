@@ -3,10 +3,11 @@
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
+#include "funcs.h"
 
-void inv_enemy(int x, int y, struct stplanet *planet)
+void inv_enemy(struct stplanet *planet)
 {
-        int num,inv_amount,balance,min_mb,transports,new_tf;
+        int inv_amount,balance,min_mb,transports,new_tf;
         int trash1, trash2;
 
         balance = planet->iu;
@@ -45,7 +46,7 @@ void inv_enemy(int x, int y, struct stplanet *planet)
                         break;
 
                 default:
-                        inv_amount = min(3,planet->inhabitants*iu_ratio - planet->iu);
+                        inv_amount = MIN(3,planet->inhabitants*iu_ratio - planet->iu);
                         balance = balance - i_cost * inv_amount;
                         planet->iu = planet->iu + inv_amount;
                         break;
@@ -73,20 +74,20 @@ void inv_enemy(int x, int y, struct stplanet *planet)
                         if ( ((float)planet->inhabitants/planet->capacity < 0.6) ||
                             ((planet->capacity >= b_cost / iu_ratio) && (planet->iu <
                             b_cost+10)) ) { /*no t"s*/
-                                inv_amount = min(3,planet->inhabitants * iu_ratio - planet->iu);
+                                inv_amount = MIN(3,planet->inhabitants * iu_ratio - planet->iu);
                                 balance = balance - inv_amount * i_cost;
                                 planet->iu = planet->iu + inv_amount;
                         } 
                         else /*build transports*/
                                 if(!(planet->conquered)) {
-                                        transports = min(rnd(2)+6,planet->inhabitants-1);
+                                        transports = MIN(rnd(2)+6,planet->inhabitants-1);
                                         if ( planet->iu > b_cost )
-                                                transports = min(transports,planet->iu - b_cost);
+                                                transports = MIN(transports,planet->iu - b_cost);
                                         balance = balance - transports;
                                         planet->inhabitants = planet->inhabitants - transports;
                                         trash1 = planet->iu - transports;
                                         trash2 = planet->inhabitants * iu_ratio;
-                                        planet->iu = min(trash1, trash2);
+                                        planet->iu = MIN(trash1, trash2);
                                         tf[ENEMY][new_tf].t = tf[ENEMY][new_tf].t + transports;
                                 };
                         break;
@@ -221,7 +222,7 @@ void inv_player(int x, int y, struct stplanet *planet)
                                                 planet->inhabitants=planet->inhabitants-amount;
                                                 trash1 = planet->iu - amount;
                                                 trash2 = planet->inhabitants * iu_ratio;
-                                                planet->iu = min(trash1, trash2);
+                                                planet->iu = MIN(trash1, trash2);
                                                 printtf = true;
                                                 if ( planet->inhabitants==0 ) {
                                                         col_stars[planet->pstar][player]--;
@@ -352,8 +353,7 @@ void invest(void)
                                                                 + newborn;
                                 pplan->iu = (  pplan->iu) + newborn;
                                 if ( pplan->team==ENEMY )
-                                        inv_enemy(stars[starnum].x,
-                                                stars[starnum].y,pplan);
+                                        inv_enemy(pplan);
                                 else
                                         inv_player(stars[starnum].x,
                                                 stars[starnum].y,pplan);

@@ -53,5 +53,14 @@ void pr3nt_tf(int i);
 void tf_battle(int starnum);
 void EN2MY_attack(int starnum);
 void pl2yerattack(int starnum);
+void research(int team, char field, int amt);
+void send_scouts(float slist[nstars+1], struct sttf *task);
+void send4transports(float slist[nstars+1], struct sttf *task);
+void move_bc(struct sttf *task, float slist[nstars+1]);
+void blast(tplanet *planet, int factors);
+int conq_round(float x);
+void swap(int *a, int *b);
+void update_board(int x, int y, toption option);
+void pr2nt_res(char field);
 
 #endif

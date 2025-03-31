@@ -7,15 +7,9 @@ extern int r2nge[nstars+1][nstars+1],
 
 extern char en_research;
 
-extern struct {
-        int enemy, star, tf;
-        } board[bdsize+1][bdsize+1];
+extern sector board[bdsize+1][bdsize+1];
 
-extern struct {
-        int x, y;
-        struct stplanet *first_planet;
-        int visit[2];
-        } stars[nstars+1];
+extern tstar stars[nstars+1];
 
 extern ttf tf[2][27];
 

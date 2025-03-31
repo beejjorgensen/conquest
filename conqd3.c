@@ -3,6 +3,7 @@
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
+#include "funcs.h"
 
 void print_col(void)
 {

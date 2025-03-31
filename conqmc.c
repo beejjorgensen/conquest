@@ -2,6 +2,7 @@
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
+#include "funcs.h"
 
 void depart(int starnum)
 {
@@ -9,9 +10,47 @@ void depart(int starnum)
         en_departures[starnum]=true;
 }
 
+void wander_bc(struct sttf *task, float slist[nstars+1])
+{
+    int ships,i,count,dest,new_tf;
+    if ( (task->b>1) || (task->c > 1) ) {
+        count = 0;
+        for ( i = 1 ; i<=nstars; i++ ) {
+            if ( slist[i] != 0 )
+                count = count + 1;
+        };
+        if ( count > 0 ) {
+            dest = rnd(count);
+            count = 0;
+            i = 0;
+            do {
+                i = i + 1;
+                if ( slist[i]>0 ) count = count + 1;
+            } 
+            while (count != dest);
+            get_tf(ENEMY,&new_tf,task->dest);
+            ships = task->b / 2;
+            tf[ENEMY][ new_tf].b = ships;
+            task->b = task->b - ships;
+            ships = task->c / 2;
+            tf[ENEMY][new_tf].c = ships;
+            task->c = task->c - ships;
+
+            if (task->t > 3) {
+                tf[ENEMY][new_tf].t = 2;
+                task->t = task->t - 2;
+                };
+
+            tf[ENEMY][new_tf].dest = i;
+            tf[ENEMY][new_tf].eta = (int)((slist[i]-0.01) / 
+                                vel[ENEMY])+1;
+            depart(task->dest);
+        };
+    };
+}
+
 int eval_bc_col(struct stplanet *planet)
 {
-int i,forces;
 int result;
     if ( ! (stars[planet->pstar].visit[ENEMY]) ) {
         result = 600;
@@ -140,7 +179,7 @@ void move_bc(struct sttf *task, float slist[nstars+1])
                     && (best_planet->conquered)
                     && (best_planet->iu < 20)  ) {
                     factors = weapons[ENEMY] * ((task->c*c_guns)+(task->b*b_guns));
-                    factors = min( factors, 4 * best_planet->inhabitants);
+                    factors = MIN( factors, 4 * best_planet->inhabitants);
                     blast(best_planet,factors);
                     if ( (tf_stars[best_planet->pstar][player] > 0 ) ||
                         (col_stars[best_planet->pstar][player] > 0 ) )
@@ -164,6 +203,29 @@ void move_bc(struct sttf *task, float slist[nstars+1])
     };
 }
  
+boolean underdefended(int starnum)
+{
+    struct stplanet *pplanet;
+    boolean result;
+    result = false;
+    pplanet = stars[starnum].first_planet;
+    while ( (pplanet != nil) && (! result) ) {
+        if ( (pplanet->team==ENEMY) && (pplanet->iu > 10) &&
+            ((6*pplanet->amb +pplanet->mb) < conq_round(pplanet->iu / 15)) )
+            result = true;
+        pplanet = pplanet->next;
+    };
+    return(result);
+}
+
+
+void send2t_tf(struct sttf *task, float slist[nstars+1], int dest_star)
+{
+    depart(task->dest);
+    task->dest = dest_star;
+    task->eta = (int)((slist[dest_star]-0.01)/vel[ENEMY])+1;
+}
+
 
 void send4transports(float slist[nstars+1], struct sttf *task)
 {
@@ -203,7 +265,7 @@ void send4transports(float slist[nstars+1], struct sttf *task)
                 ) {
                 trash1 = task->t;
                 trash2 = (best_plan->capacity-best_plan->inhabitants)/3;
-                to_land = min(trash1, trash2);
+                to_land = MIN(trash1, trash2);
                 if ( (to_land > 0) ) {
                     if ( (best_plan->inhabitants==0)  ) {
                         best_plan->team = ENEMY;
@@ -242,14 +304,6 @@ void send4transports(float slist[nstars+1], struct sttf *task)
 }
 
 
-void send2t_tf(struct sttf *task, float slist[nstars+1], int dest_star)
-{
-    depart(task->dest);
-    task->dest = dest_star;
-    task->eta = (int)((slist[dest_star]-0.01)/vel[ENEMY])+1;
-}
-
-
 void send_scouts(float slist[nstars+1], struct sttf *task)
 {
     int dest,new_tf,j,doind;
@@ -285,60 +339,6 @@ void send_scouts(float slist[nstars+1], struct sttf *task)
             tf[ENEMY][new_tf].eta = (int)((slist[dest]-0.01)/vel[ENEMY])+1;
             depart(task->dest);
             task->s = task->s -1;
-        };
-    };
-}
-
-boolean underdefended(int starnum)
-{
-    struct stplanet *pplanet;
-    boolean result;
-    result = false;
-    pplanet = stars[starnum].first_planet;
-    while ( (pplanet != nil) && (! result) ) {
-        if ( (pplanet->team==ENEMY) && (pplanet->iu > 10) &&
-            ((6*pplanet->amb +pplanet->mb) < conq_round(pplanet->iu / 15)) )
-            result = true;
-        pplanet = pplanet->next;
-    };
-    return(result);
-}
-
-void wander_bc(struct sttf *task, float slist[nstars+1])
-{
-    int ships,i,count,dest,new_tf;
-    if ( (task->b>1) || (task->c > 1) ) {
-        count = 0;
-        for ( i = 1 ; i<=nstars; i++ ) {
-            if ( slist[i] != 0 )
-                count = count + 1;
-        };
-        if ( count > 0 ) {
-            dest = rnd(count);
-            count = 0;
-            i = 0;
-            do {
-                i = i + 1;
-                if ( slist[i]>0 ) count = count + 1;
-            } 
-            while (count != dest);
-            get_tf(ENEMY,&new_tf,task->dest);
-            ships = task->b / 2;
-            tf[ENEMY][ new_tf].b = ships;
-            task->b = task->b - ships;
-            ships = task->c / 2;
-            tf[ENEMY][new_tf].c = ships;
-            task->c = task->c - ships;
-
-            if (task->t > 3) {
-                tf[ENEMY][new_tf].t = 2;
-                task->t = task->t - 2;
-                };
-
-            tf[ENEMY][new_tf].dest = i;
-            tf[ENEMY][new_tf].eta = (int)((slist[i]-0.01) / 
-                                vel[ENEMY])+1;
-            depart(task->dest);
         };
     };
 }

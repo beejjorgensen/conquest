@@ -1,3 +1,6 @@
+#ifndef DEFS_H
+#define DEFS_H
+
 #define nil     0
 #define true    1
 #define false   0
@@ -32,3 +35,5 @@
 #define b_e_var         3
 
 #define  MIN(x,y) (x < y) ? x : y
+
+#endif

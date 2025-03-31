@@ -1,22 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <curses.h>
 #include "defs.h"
 #include "structs.h"
 #include "vars.h"
-
-void lose_q(int *Ship9s, char typ, float percent)
-{
-        int i,sleft;
-        int ships;
-
-        ships = *Ship9s;
-        sleft = ships;
-        if ( ships > 0 )
-                for ( i = 1 ; i<=ships; i++ )
-                        if ( ((float)(rand()&0x7fff)/(float)(0x7fff)) > percent )
-                                sleft = sleft - 1;
-        *Ship9s = sleft;
-}
+#include "funcs.h"
 
 void move_ships(void)
 {
