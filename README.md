@@ -5,6 +5,9 @@ This is an Amiga TUI game that I've modernized and ported to Linux.
 The gameplay is unchanged. You can switch to the `original` tag to get
 to the original sources.
 
+I still don't know how to play, and there are probably bugs. But at
+least it builds!
+
 Original Fish disk notes:
 
 ```
