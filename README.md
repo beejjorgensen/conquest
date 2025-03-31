@@ -1,3 +1,13 @@
+# Conquest
+
+This is an Amiga game that I've modernized and ported to Linux.
+
+The gameplay is unchanged. You can switch to the `original` tag to get
+to the original sources.
+
+Original Fish disk notes:
+
+```
 There are two executables provided here:
 
 	conquest.orig	Executable received from Bob Shimbo with the
@@ -11,3 +21,4 @@ if the size difference is significant.  The both run to the extent
 that you can start them up and then "QUIT" successfully.
 
 -Fred	5-May-86
+```
