@@ -1,7 +1,7 @@
 # Conquest
 
-This is an Amiga TUI game that I've modernized (to ANSI C!) and ported
-to Linux and the Mac.
+This is an Amiga TUI game that I've modernized (bye, pre-ANSI function
+signatures!) and ported to Linux and the Mac.
 
 The gameplay is unchanged. You can git switch to the `original` tag to
 get to the original sources.
