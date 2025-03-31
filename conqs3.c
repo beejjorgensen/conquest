@@ -10,8 +10,10 @@ void get_char(char *C)
 {
     char result;
     result = getch();
-    if (result == 0x0d)
+    if (result == 0x0d || result == 0x0a)
         result = '\n';
+    if (result == 0x7f)
+        result = '\b';
     *C = toupper(result);
     printw("%c", *C);
 }
