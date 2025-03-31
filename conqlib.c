@@ -1,5 +1,3 @@
-#include <stdio.h>
-
 double fact(k)
 int k;
 { 
