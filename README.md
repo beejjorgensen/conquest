@@ -21,7 +21,7 @@ additional information, I'd love to hear it either here on GitHub or at
 
 * Source for the Amiga can be found in `archives/Conquest-source.lha`.
   This archive also contains the Amiga executables. I haven't tried them
-  in an emulator, but I'll bet theyu works.
+  in an emulator, but I'll bet they work.
 
 ## Fish Disk info
 
@@ -33,13 +33,13 @@ Disk](https://en.wikipedia.org/wiki/Fred_Fish#The_Amiga_Library_Disks)
 CONTENTS OF DISK 10
 ===================
 
-conquest   You control an interstellar empire, decide which star
-           systems to explore, which planets to colonize, etc. The
-           computer will also be building its own empire and
-           competing with you for resources. The one with the
-           greatest population at the end wins. Executable only,
-           no source. Downloaded from Denver BBS. Author: Unknown,
-           ported to Amiga by Rob Shimbo
+conquest        You control an interstellar empire, decide which star
+                systems to explore, which planets to colonize, etc. The
+                computer will also be building its own empire and
+                competing with you for resources. The one with the
+                greatest population at the end wins. Executable only,
+                no source. Downloaded from Denver BBS. Author: Unknown,
+                ported to Amiga by Rob Shimbo
 ```
 
 This is the `README` from the Amiga archive:
