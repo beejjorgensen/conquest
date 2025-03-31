@@ -111,9 +111,9 @@ void check_game_over(void)
 
 void display_forces(int ennum, int plnum, float *En0dds, float *Pl0dds, boolean *Battl9)
 {
-        float enodds, plodds;
+        float enodds = 0, plodds = 0;
         boolean battle;
-        int en_forces, pl_forces;
+        int en_forces = 0, pl_forces = 0;
         zero_tf(ENEMY,ennum);
         zero_tf(player,plnum);
         battle = true;
@@ -196,7 +196,7 @@ void EN2MY_attack(int starnum)
                 best_score = 1000;
                 pplanet = stars[starnum].first_planet;
                 while (pplanet != nil ) {
-                        if ( (pplanet->team == player) ) {
+                        if ( pplanet->team == player ) {
                                 def_factors =  pplanet->esee_def;
                                 odds = (float)def_factors / attack_factors;
                                 if ( pplanet->capacity > 30 )

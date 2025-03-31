@@ -115,7 +115,7 @@ void play_salvo(int starnum, boolean *Battl9)
 {
         boolean battle;
         char tf_char,planch; 
-        int planet_num,tf_num; 
+        int planet_num = 0,tf_num; 
         boolean found;
         struct stplanet *pplanet;
         boolean first_time;

@@ -147,7 +147,7 @@ void join_tf(void)
                                 error_message();
                                 printw("!Duplicate tf %c",tf2);
                         }
-                        else if ( (tf[player][tf2n].dest == 0 ) ) {
+                        else if ( tf[player][tf2n].dest == 0 ) {
                                 error_message();
                                 printw("!Nonexistant TF%c",tf2);
                         }

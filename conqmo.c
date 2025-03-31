@@ -63,7 +63,7 @@ void move_ships(void)
                                                 ratio = 1.0 - ((float)tf[tm][i].eta / tf[tm][i].origeta);
                                                 tf[tm][i].x = tf[tm][i].xf + conq_round(ratio*(dx-tf[tm][i].xf));
                                                 tf[tm][i].y = tf[tm][i].yf + conq_round(ratio*(dy-tf[tm][i].yf));
-                                                if ( (tf[tm][i].eta ==0)  ) {
+                                                if ( tf[tm][i].eta ==0 ) {
                                                         pplanet = stars[tf[tm][i].dest].first_planet;
                                                         while (pplanet != nil) {
                                                                 pplanet->psee_capacity = pplanet->capacity;
@@ -94,7 +94,7 @@ void move_ships(void)
                                                     (col_stars[tf[tm][i].dest][player]>0) )
                                                         enemy_arrivals[tf[tm][i].dest]=true;
                                         };
-                                        if ( (tf[tm][i].eta==0)  )
+                                        if ( tf[tm][i].eta==0 )
                                                 tf_stars[tf[tm][i].dest][tm] ++;
                                 };
                         };

@@ -158,7 +158,7 @@ void move_bc(struct sttf *task, float slist[nstars+1])
                 pplanet = stars[starnum].first_planet;
                 while ( pplanet != nil ) {
                     score = eval_bc_col(pplanet) ;
-                    if ( (starnum==task->dest) )
+                    if ( starnum==task->dest )
                         score += 250;
 
                     if (tf_stars[starnum][ENEMY] > 0)
@@ -260,14 +260,14 @@ void send4transports(float slist[nstars+1], struct sttf *task)
                 };
             };
         };
-        if ( (best_star == task->dest)  ) { /*land*/
+        if ( best_star == task->dest ) { /*land*/
             if ( (tf_stars[best_star][player]==0) && (best_plan->team != player) 
                 ) {
                 trash1 = task->t;
                 trash2 = (best_plan->capacity-best_plan->inhabitants)/3;
                 to_land = MIN(trash1, trash2);
                 if ( (to_land > 0) ) {
-                    if ( (best_plan->inhabitants==0)  ) {
+                    if ( best_plan->inhabitants==0 ) {
                         best_plan->team = ENEMY;
                         best_plan->esee_team = ENEMY;
                         col_stars[best_star][ENEMY]=col_stars[best_star][ENEMY]+1;

@@ -1,5 +1,4 @@
-double fact(k)
-int k;
+double fact(int k)
 { 
   if (k == 1) return(1);
         else

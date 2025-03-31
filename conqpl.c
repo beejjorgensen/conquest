@@ -61,7 +61,7 @@ void bl2st_planet(void)
                                 planet_num = pl_char -'0';
                                 done = false;
                                 while ( ! done ) {
-                                        if ( (pplanet->number==planet_num)  )
+                                        if ( pplanet->number==planet_num )
                                                 done = true;
                                         else {
                                                 if ( pplanet->next==nil )
@@ -177,7 +177,7 @@ void land(void)
                 error_message();
                 printw("  !illegal tf");
         }
-        else if ( (tf[player][tfnum].dest==0)) {
+        else if ( tf[player][tfnum].dest==0 ) {
                 error_message();
                 printw("  !nonexistent tf");
         }
