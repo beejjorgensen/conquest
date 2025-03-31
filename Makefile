@@ -7,7 +7,7 @@ LDFLAGS = -lcurses -lm
 SRCS = $(wildcard *.c)
 OBJS = $(SRCS:.c=.o)
 
-.PHONY: all clean pristine
+.PHONY: all clean pristine help
 
 all: $(TARGET)
 
@@ -31,3 +31,13 @@ clean:
 
 pristine: clean
 	rm -f $(TARGET)
+
+BOLD := $(shell tput bold)
+RESET := $(shell tput sgr0)
+
+help:
+	@printf "\n  $(BOLD)make all$(RESET)        build the application\n"
+	@printf "  $(BOLD)make clean$(RESET)      remove temporary build products\n"
+	@printf "  $(BOLD)make pristine$(RESET)   remove all build products\n"
+	@printf "  $(BOLD)make help$(RESET)       this help\n\n"
+
