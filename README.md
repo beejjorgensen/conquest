@@ -117,9 +117,4 @@ that you can start them up and then "QUIT" successfully.
 
 ## Bugs in my Unix port
 
-* Backspacing too far on a line can move the cursor effectively under
-  the prompt
-  * Sometimes this causes your units to jump to gigantic values so
-    there's UB in there somewhere.
-* Can't backspace properly over first entered character
-
+* To find

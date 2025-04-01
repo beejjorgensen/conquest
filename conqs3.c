@@ -6,7 +6,7 @@
 #include "vars.h"
 #include "funcs.h"
 
-void get_char(char *C)
+void read_char(char *C)
 {
     char result;
     result = getch();
@@ -15,6 +15,11 @@ void get_char(char *C)
     if (result == 0x7f)
         result = '\b';
     *C = toupper(result);
+}
+
+void get_char(char *C)
+{
+    read_char(C);
     printw("%c", *C);
 }
 
@@ -25,20 +30,20 @@ void get_line(char *iline, int *Ind0, int onech)
 
     ind = 1;
     do {
-        get_char(&ch);
+        read_char(&ch);
         if (ch == '\b') {       /*backspace */
             if (ind != 1) {
-                ind = ind - 1;
                 if ((ind != 1) && onech) {
                     addch('\b');
                     ind = ind - 1;
                 };
                 if ((ind != 1) && !onech) {
-                    addch(' ');
-                    addch('\b');
+                    printw("\b \b");
+                    ind = ind - 1;
                 }
             };
         } else if (ch != '\n') {
+            printw("%c", ch);
             iline[ind] = ch;
             ind = ind + 1;
             if (onech) {
