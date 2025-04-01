@@ -1,7 +1,33 @@
 # Conquest
 
 This is an Amiga TUI game that I've modernized (bye, pre-ANSI function
-signatures!) and ported to Linux and the Mac.
+signatures!) and gotten running on Linux and the Mac.
+
+```
+  15| .  .  .  .  .  .  .  .  . ?D  .  .  .  .  . |
+    | .  .  .  .  .  .  . ?M  .  .  .  .  .  .  . |
+    | . ?O  .  . ?J  .  .  .  .  .  .  .  .  .  . |
+    | .  .  .  .  .  .  . ?K  .  .  .  .  .  . ?C |
+    | .  .  .  .  .  . ?L  .  .  .  .  .  .  .  . |
+  10| .  .  .  .  .  .  .  .  .  . ?F  .  .  .  . |
+    | .  .  . ?I  .  . ?B  .  .  .  .  .  .  .  . |
+    | .  .  .  .  .  .  .  .  .  .  .  .  .  .  . |
+    | .  .  .  .  .  .  .  .  .  . ?S  .  .  .  . |
+    | .  . ?P  .  .  .  .  .  .  .  .  .  .  .  . |
+   5| .  .  .  .  .  .  .  .  . ?Q  .  .  . ?H ?N |
+    | .  .  .  .  .  .  .  . ?T  .  .  .  .  .  . |
+    | .  .  .  .  . ?U  .  . ?A ?G  .  .  .  .  . |
+    | .  .  .  .  .  .  .  .  .  .  . ?R  .  .  . |
+   1| .  .  .  .  .  .  .  .  . ?E  .  .  .  .  . |
+     ---------------------------------------------
+      1           5             10             15
+   30?
+  TFa:B( 7, 9)  35t               Production yr: 1
+  choose your initial fleet.      *Initialization*
+  you have 35 transports
+   && 30 units to spend
+  on ships or research.
+```
 
 The gameplay is unchanged. You can git switch to the `original` tag to
 get to the original sources.
