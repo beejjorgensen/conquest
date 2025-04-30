@@ -50,8 +50,6 @@ actually know how to play. Yet.
 additional info, I'd love to hear it either here on GitHub or at
 `beej@beej.us`.
 
-### Thin Leads from the Instructions
-
 The [`instructions.txt`](instructions.txt) file includes this at the
 end:
 
@@ -71,12 +69,28 @@ end:
 ...*Bell Labs*?  I'm trying to track down more info, so if you have it,
 please send it!
 
-### Original Source
+I got in touch with Bob Shimbo, but he doesn't recall any details.
+
+Brian Kernighan didn't recall it from Bell Labs.
+
+I found a potential Scott Kamin and snail-mailed him, but there was no
+reply.
+
+I posted to The Unix Heritage Society (TUHS) mailing list, and Jonathan
+Gray suggested it sounded an awful lot like the board game [_Stellar
+Conquest_](https://en.wikipedia.org/wiki/Stellar_Conquest), published in
+1974 by Metagaming Concepts, and republished in 1984 by Avalon Hill. And
+reading [the instructions for that
+game](https://boardgamegeek.com/filepage/232236/rules-to-stellar-conquest-retyped),
+it really seems like it might be the inspiration for this game.
+
+### Original Source and Amiga Binaries
 
 * Source for the Amiga can be found in
-  [`archives/Conquest-source.lha`](archives/Conquest-source.lha]). This
-  archive also contains the Amiga executables. I haven't tried them in
-  an emulator, but I'll bet they work.
+  [`archives/Conquest-source.lha`](archives/Conquest-source.lha]).
+
+* That archive also contains the Amiga executables. I haven't tried them
+  in an emulator, but I'll bet they work.
 
 ### Fish Disk info
 
