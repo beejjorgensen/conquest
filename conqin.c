@@ -149,6 +149,7 @@ void init_player(void)
                 };              /*!= switch ( */
                 break;
             default:
+                cost = 0;
                 error_message();
                 printw(" !Illegal field %c", key);
             };                  /*switch ( */

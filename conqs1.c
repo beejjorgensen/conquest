@@ -29,7 +29,7 @@ void set_des(int tf_num, boolean *Err0r)
     point(10, y_cursor);
     get_char(&istar);
     st_num = istar - 'A' + 1;
-    if ((st_num < 0) || (st_num > nstars)) {
+    if ((st_num < 1) || (st_num > nstars)) {
         error_message();
         printw("  !illegal star");
     } else {

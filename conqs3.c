@@ -293,7 +293,7 @@ void pause(void)
 void pr3nt_tf(int i)
 {
     int x, y;
-    if ((i != 0) && (i < 27)) {
+    if ((i >= 1) && (i < 27)) {
         if (tf[player][i].dest != 0) {
             printw("TF%c:", i + 'a' - 1);
             x = tf[player][i].x;
@@ -323,7 +323,7 @@ void pr5nt_star(int stnum)
     boolean see;
     int i;
     tplanet *p;
-    if ((stnum != 0) && (stnum <= nstars)) {
+    if ((stnum >= 1) && (stnum <= nstars)) {
         if ((y_cursor + 3 + tf_stars[stnum][player] +
              tf_stars[stnum][ENEMY]) > 19) {
             clear_field();

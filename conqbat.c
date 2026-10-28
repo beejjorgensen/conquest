@@ -155,6 +155,7 @@ void play_salvo(int starnum, boolean *Battl9)
     } else {
         while (pplanet->team != ENEMY)
             pplanet = pplanet->next;
+        planet_num = pplanet->number;
         printw("%d", pplanet->number);
         cle3r_left();
     };
